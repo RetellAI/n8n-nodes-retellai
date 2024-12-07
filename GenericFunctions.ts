@@ -4,21 +4,24 @@ import type {
 	IHookFunctions,
 	ILoadOptionsFunctions,
 	IHttpRequestOptions,
+    IHttpRequestMethods,
+    IDataObject,
 } from 'n8n-workflow';
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
+
 export async function retellApiRequest(
 	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions,
-	method: string,
+	method: IHttpRequestMethods,
 	resource: string,
-	body: object = {},
-	qs: object = {},
+	body: IDataObject = {},
+	qs: IDataObject = {},
 	uri?: string,
-	option: IHttpRequestOptions = {},
+	options: Partial<IHttpRequestOptions> = {},
 ): Promise<any> {
 	const credentials = await this.getCredentials('retellAIApi');
 
-	const options: IHttpRequestOptions = {
+	const baseOptions: IHttpRequestOptions = {
 		headers: {
 			'Authorization': `Bearer ${credentials.apiKey}`,
 			'Content-Type': 'application/json',
@@ -26,13 +29,17 @@ export async function retellApiRequest(
 		method,
 		body,
 		qs,
-		uri: uri || `https://api.retellai.com${resource}`,
+		url: uri || `https://api.retellai.com${resource}`,
 		json: true,
-		...option,
+	};
+
+	const requestOptions: IHttpRequestOptions = {
+		...baseOptions,
+		...options,
 	};
 
 	try {
-		return await this.helpers.request(options);
+		return await this.helpers.request(requestOptions);
 	} catch (error) {
 		throw new NodeApiError(this.getNode(), error);
 	}
