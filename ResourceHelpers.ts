@@ -218,10 +218,12 @@ export async function handleKnowledgeBaseOperations(
 		// Handle binary files
 		const binaryPropertyName = this.getNodeParameter('binaryPropertyName', i) as string;
 		const binaryData = this.helpers.assertBinaryData(i, binaryPropertyName);
-		const dataBuffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
-		
-		formData.append('knowledge_base_files', new Blob([dataBuffer]), binaryData.fileName);
-
+        const dataBuffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
+        const uint8Array = new Uint8Array(dataBuffer as unknown as ArrayBuffer);
+        const arrayBuffer = uint8Array.buffer;
+        
+        formData.append( 'knowledge_base_files', new Blob([arrayBuffer]), binaryData.fileName);
+        
 		const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 		
 		if (additionalFields.knowledgeBaseUrls) {
@@ -348,9 +350,13 @@ export function createWebSocketHandler(
 		}
 	};
 
-	ws.onerror = (error) => {
-		onError(error as Error);
-	};
+    ws.onerror = (event) => {
+        if (event instanceof ErrorEvent) {
+          onError(new Error(event.message));
+        } else {
+          onError(new Error('WebSocket error occurred'));
+        }
+      };
 
 	return ws;
 }
