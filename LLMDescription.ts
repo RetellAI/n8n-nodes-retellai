@@ -183,6 +183,7 @@ export const llmFields: INodeProperties[] = [
 				displayName: 'Model',
 				name: 'model',
 				type: 'options',
+                default: 'gpt-4o',
 				options: [
 					{
 						name: 'GPT-4',
@@ -205,6 +206,7 @@ export const llmFields: INodeProperties[] = [
 			{
 				displayName: 'Model Temperature',
 				name: 'modelTemperature',
+                default: 0,
 				type: 'number',
 				typeOptions: {
 					minValue: 0,
@@ -215,6 +217,7 @@ export const llmFields: INodeProperties[] = [
 				displayName: 'General Prompt',
 				name: 'generalPrompt',
 				type: 'string',
+                default: '',
 				typeOptions: {
 					rows: 4,
 				},
