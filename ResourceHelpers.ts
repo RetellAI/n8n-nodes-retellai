@@ -1,4 +1,3 @@
-// ResourceHelpers.ts
 import type {
 	IExecuteFunctions,
 	ILoadOptionsFunctions,

@@ -1,4 +1,3 @@
-// RetellAI.node.ts
 import type {
 	IExecuteFunctions,
 	INodeExecutionData,
@@ -47,7 +46,7 @@ import {
 export class RetellAI implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'RetellAI',
-		name: 'retellAI',
+		name: 'retellAi',
 		icon: 'file:retellai.svg',
 		group: ['transform'],
 		version: 1,
@@ -78,12 +77,16 @@ export class RetellAI implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
+						name: 'Agent',
+						value: 'agent',
+					},
+					{
 						name: 'Call',
 						value: 'call',
 					},
 					{
-						name: 'Agent',
-						value: 'agent',
+						name: 'Knowledge Base',
+						value: 'knowledgeBase',
 					},
 					{
 						name: 'LLM',
@@ -92,10 +95,6 @@ export class RetellAI implements INodeType {
 					{
 						name: 'Phone Number',
 						value: 'phoneNumber',
-					},
-					{
-						name: 'Knowledge Base',
-						value: 'knowledgeBase',
 					},
 					{
 						name: 'Voice',

@@ -1,4 +1,3 @@
-// GenericFunctions.ts
 import type {
 	IExecuteFunctions,
 	IHookFunctions,

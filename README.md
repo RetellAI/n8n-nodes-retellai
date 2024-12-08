@@ -45,7 +45,7 @@ You need the following installed on your development machine:
 3. Link your node to n8n:
    ```bash
    # In ~/.n8n/custom
-   npm link n8n-nodes-retellapi
+   npm link n8n-nodes-retellai
    ```
 
 4. Start n8n:

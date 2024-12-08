@@ -1,4 +1,3 @@
-// RetellAIApi.credentials.ts
 import type {
     IAuthenticateGeneric,
 	ICredentialTestRequest,

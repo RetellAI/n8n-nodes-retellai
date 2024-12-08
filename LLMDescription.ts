@@ -1,4 +1,3 @@
-// LLMDescription.ts
 import type { INodeProperties } from 'n8n-workflow';
 
 export const llmOperations: INodeProperties[] = [
