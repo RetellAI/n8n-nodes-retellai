@@ -14,7 +14,7 @@ export async function retellApiRequest(
 	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions,
 	method: IHttpRequestMethods,
 	resource: string,
-	body: IDataObject = {},
+	body: IDataObject | FormData = {}, 
 	qs: IDataObject = {},
 	uri?: string,
 	options: Partial<IHttpRequestOptions> = {},
@@ -24,14 +24,21 @@ export async function retellApiRequest(
 	const baseOptions: IHttpRequestOptions = {
 		headers: {
 			'Authorization': `Bearer ${credentials.apiKey}`,
-			'Content-Type': 'application/json',
+			// Set content type dynamically for FormData
+			'Content-Type': body instanceof FormData ? undefined : 'application/json',
 		},
 		method,
-		body,
 		qs,
 		url: uri || `https://api.retellai.com${resource}`,
-		json: true,
+		json: !(body instanceof FormData), // Disable JSON parsing for FormData
 	};
+
+	// Add body or FormData
+	if (body instanceof FormData) {
+		baseOptions.body = body; 
+	} else {
+		baseOptions.body = body; 
+	}
 
 	const requestOptions: IHttpRequestOptions = {
 		...baseOptions,
@@ -44,6 +51,7 @@ export async function retellApiRequest(
 		throw new NodeApiError(this.getNode(), error);
 	}
 }
+
 
 export async function validateRetellCredentials(
 	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions,

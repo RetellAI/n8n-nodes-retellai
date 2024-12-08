@@ -1,10 +1,8 @@
 // RetellAIApi.credentials.ts
 import type {
     IAuthenticateGeneric,
-	ICredentialDataDecryptedObject,
 	ICredentialTestRequest,
 	ICredentialType,
-	IHttpRequestOptions,
 	INodeProperties,
 } from 'n8n-workflow';
 

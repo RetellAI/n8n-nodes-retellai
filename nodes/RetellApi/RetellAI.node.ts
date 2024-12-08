@@ -7,7 +7,6 @@ import type {
 	ILoadOptionsFunctions,
 	INodePropertyOptions,
 } from 'n8n-workflow';
-import { NodeOperationError } from 'n8n-workflow';
 
 import {
 	handleCallOperations,
@@ -17,33 +16,33 @@ import {
     handleLLMOperations,
     handlePhoneNumberOperations,
     handleVoiceOperations,
-} from './ResourceHelpers';
-import { retellApiRequest, validateRetellCredentials } from './GenericFunctions';
+} from '../../ResourceHelpers';
+import {  validateRetellCredentials } from '../../GenericFunctions';
 
 import {
 	callOperations,
 	callFields,
-} from './CallDescription';
+} from '../../CallDescription';
 import {
 	agentOperations,
 	agentFields,
-} from './AgentDescription';
+} from '../../AgentDescription';
 import {
 	llmOperations,
 	llmFields,
-} from './LLMDescription';
+} from '../../LLMDescription';
 import {
 	phoneNumberOperations,
 	phoneNumberFields,
-} from './PhoneNumberDescription';
+} from '../../PhoneNumberDescription';
 import {
 	knowledgeBaseOperations,
 	knowledgeBaseFields,
-} from './KnowledgeBaseDescription';
+} from '../../KnowledgeBaseDescription';
 import {
 	voiceOperations,
 	voiceFields,
-} from './VoiceDescription';
+} from '../../VoiceDescription';
 
 export class RetellAI implements INodeType {
 	description: INodeTypeDescription = {

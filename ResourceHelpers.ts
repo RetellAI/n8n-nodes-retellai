@@ -79,7 +79,7 @@ export async function handleCallOperations(
 	return responseData;
 }
 
-export async function  handleLLMOperations(operation: string, itemIndex: number) {
+export async function  handleLLMOperations(this: IExecuteFunctions, operation: string, itemIndex: number) {
     const llmId = this.getNodeParameter('llmId', itemIndex, '') as string;
 
     if (operation === 'create') {
@@ -117,7 +117,7 @@ export async function  handleLLMOperations(operation: string, itemIndex: number)
     );
 }
 
-export async function handlePhoneNumberOperations(operation: string, itemIndex: number) {
+export async function handlePhoneNumberOperations(this: IExecuteFunctions,operation: string, itemIndex: number) {
 	if (operation === 'create') {
 		const areaCode = this.getNodeParameter('areaCode', itemIndex) as number;
 		const additionalFields = this.getNodeParameter('additionalFields', itemIndex, {});
@@ -184,7 +184,7 @@ export async function handlePhoneNumberOperations(operation: string, itemIndex: 
 	);
 }
 
-export async function handleVoiceOperations(operation: string, itemIndex: number) {
+export async function handleVoiceOperations(this: IExecuteFunctions,operation: string, itemIndex: number) {
     if (operation === 'get') {
         const voiceId = this.getNodeParameter('voiceId', itemIndex) as string;
         return await retellApiRequest.call(this, 'GET', `/get-voice/${voiceId}`);
