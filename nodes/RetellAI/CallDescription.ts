@@ -62,6 +62,21 @@ export const callOperations: INodeProperties[] = [
 ];
 
 export const callFields: INodeProperties[] = [
+	// Fields for createWebCall operation
+	{
+		displayName: 'Agent ID',
+		name: 'agentID',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['call'],
+				operation: ['createWebCall'],
+			},
+		},
+		default: '',
+		description: 'Unique ID of agent used for the call. Your agent would contain the LLM Websocket URL used for this call.',
+	},
 	// Fields for createPhoneCall operation
 	{
 		displayName: 'From Number',
@@ -92,7 +107,7 @@ export const callFields: INodeProperties[] = [
 		default: '',
 		description: 'The number you want to call in E.164 format',
 		placeholder: '+14157774445',
-	},
+	},	
 	// Fields for Get operation
 	{
 		displayName: 'Call ID',
