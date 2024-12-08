@@ -48,6 +48,7 @@ export const llmOperations: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
+				// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 				action: 'Get many retell LLMs',
 				routing: {
 					request: {

@@ -1,4 +1,4 @@
-# n8n-nodes-retellapi
+# n8n-nodes-retellai
 
 This repo contains custom nodes for integrating Retell AI with [n8n](n8n.io). It includes the node linter and other dependencies.
 

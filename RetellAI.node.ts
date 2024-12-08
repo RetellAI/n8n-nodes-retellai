@@ -1,3 +1,4 @@
+// RetellAI.node.ts
 import type {
 	IExecuteFunctions,
 	INodeExecutionData,
@@ -6,6 +7,7 @@ import type {
 	ILoadOptionsFunctions,
 	INodePropertyOptions,
 } from 'n8n-workflow';
+import { NodeOperationError } from 'n8n-workflow';
 
 import {
 	handleCallOperations,
@@ -15,38 +17,38 @@ import {
     handleLLMOperations,
     handlePhoneNumberOperations,
     handleVoiceOperations,
-} from './ResourceHelpers';
-import {  validateRetellCredentials } from './GenericFunctions';
+} from './nodes/RetellAI/ResourceHelpers';
+import { retellApiRequest, validateRetellCredentials } from './nodes/RetellAI/GenericFunctions';
 
 import {
 	callOperations,
 	callFields,
-} from './CallDescription';
+} from './nodes/RetellAI/CallDescription';
 import {
 	agentOperations,
 	agentFields,
-} from './AgentDescription';
+} from './nodes/RetellAI/AgentDescription';
 import {
 	llmOperations,
 	llmFields,
-} from './LLMDescription';
+} from './nodes/RetellAI/LLMDescription';
 import {
 	phoneNumberOperations,
 	phoneNumberFields,
-} from './PhoneNumberDescription';
+} from './nodes/RetellAI/PhoneNumberDescription';
 import {
 	knowledgeBaseOperations,
 	knowledgeBaseFields,
-} from './KnowledgeBaseDescription';
+} from './nodes/RetellAI/KnowledgeBaseDescription';
 import {
 	voiceOperations,
 	voiceFields,
-} from './VoiceDescription';
+} from './nodes/RetellAI/VoiceDescription';
 
 export class RetellAI implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'RetellAI',
-		name: 'retellAi',
+		name: 'retellAI',
 		icon: 'file:retellai.svg',
 		group: ['transform'],
 		version: 1,
@@ -77,16 +79,12 @@ export class RetellAI implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Agent',
-						value: 'agent',
-					},
-					{
 						name: 'Call',
 						value: 'call',
 					},
 					{
-						name: 'Knowledge Base',
-						value: 'knowledgeBase',
+						name: 'Agent',
+						value: 'agent',
 					},
 					{
 						name: 'LLM',
@@ -95,6 +93,10 @@ export class RetellAI implements INodeType {
 					{
 						name: 'Phone Number',
 						value: 'phoneNumber',
+					},
+					{
+						name: 'Knowledge Base',
+						value: 'knowledgeBase',
 					},
 					{
 						name: 'Voice',

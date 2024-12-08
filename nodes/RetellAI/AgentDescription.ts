@@ -96,7 +96,7 @@ export const agentFields: INodeProperties[] = [
 						type: 'string',
 						required: true,
 						default: '',
-						description: 'Unique id of Retell LLM',
+						description: 'Unique ID of Retell LLM',
 					},
 					{
 						displayName: 'Type',
@@ -116,6 +116,7 @@ export const agentFields: INodeProperties[] = [
 		],
 	},
 	{
+		// eslint-disable-next-line n8n-nodes-base/node-param-display-name-wrong-for-dynamic-options
 		displayName: 'Voice ID',
 		name: 'voiceId',
 		type: 'options',
@@ -130,7 +131,8 @@ export const agentFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'Voice ID for the agent',
+		// eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-dynamic-options
+		description: 'Unique voice ID used for the agent. Find list of available voices and their preview in Dashboard.',
 	},
 	{
 		displayName: 'Additional Fields',
@@ -170,7 +172,7 @@ export const agentFields: INodeProperties[] = [
 						value: 'eleven_multilingual_v2',
 					},
 				],
-				default: '',
+				default: 'eleven_turbo_v2',
 				description: 'Voice model to use',
 			},
 			{
@@ -222,9 +224,12 @@ export const agentFields: INodeProperties[] = [
 				default: '',
 			},
 			{
+				// eslint-disable-next-line n8n-nodes-base/node-param-display-name-wrong-for-dynamic-options
 				displayName: 'Voice ID',
 				name: 'voiceId',
 				type: 'options',
+				// eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-dynamic-options
+				description: 'Unique voice ID used for the agent. Find list of available voices and their preview in Dashboard.',
 				typeOptions: {
 					loadOptionsMethod: 'getVoices',
 				},

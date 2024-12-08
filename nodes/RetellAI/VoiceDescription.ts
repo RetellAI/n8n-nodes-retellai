@@ -116,7 +116,7 @@ export const voiceFields: INodeProperties[] = [
 						value: 'female',
 					},
 				],
-				default: '',
+				default: 'female',
 				description: 'Filter voices by gender',
 			},
 			{
@@ -161,16 +161,12 @@ export const voiceFields: INodeProperties[] = [
 				type: 'options',
 				options: [
 					{
-						name: 'English (US)',
-						value: 'en-US',
-					},
-					{
 						name: 'English (UK)',
 						value: 'en-GB',
 					},
 					{
-						name: 'Spanish',
-						value: 'es-ES',
+						name: 'English (US)',
+						value: 'en-US',
 					},
 					{
 						name: 'French',
@@ -196,8 +192,12 @@ export const voiceFields: INodeProperties[] = [
 						name: 'Portuguese',
 						value: 'pt-BR',
 					},
+					{
+						name: 'Spanish',
+						value: 'es-ES',
+					},
 				],
-				default: '',
+				default: 'en-GB',
 				description: 'Filter voices by language',
 			},
 		],
