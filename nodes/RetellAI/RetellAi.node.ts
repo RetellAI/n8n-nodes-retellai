@@ -15,9 +15,13 @@ import {
     handleLLMOperations,
     handlePhoneNumberOperations,
     handleVoiceOperations,
+	handleConcurrencyOperations,
 } from './ResourceHelpers';
 import {  validateRetellCredentials } from './GenericFunctions';
-
+import {
+    concurrencyOperations,
+    concurrencyFields,
+} from './ConcurrencyDescription';
 import {
 	callOperations,
 	callFields,
@@ -85,6 +89,10 @@ export class RetellAI implements INodeType {
 						value: 'call',
 					},
 					{
+						name: 'Concurrency',
+						value: 'concurrency',
+					},
+					{
 						name: 'Knowledge Base',
 						value: 'knowledgeBase',
 					},
@@ -105,6 +113,8 @@ export class RetellAI implements INodeType {
 			},
 			...callOperations,
 			...callFields,
+			...concurrencyOperations,
+			...concurrencyFields,
 			...agentOperations,
 			...agentFields,
 			...llmOperations,
@@ -141,6 +151,8 @@ export class RetellAI implements INodeType {
 
 				if (resource === 'call') {
 					responseData = await handleCallOperations.call(this, operation, i);
+				} else if (resource === 'concurrency') {
+					responseData = await handleConcurrencyOperations.call(this, operation, i);
 				} else if (resource === 'agent') {
 					responseData = await handleAgentOperations.call(this, operation, i);
 				} else if (resource === 'llm') {

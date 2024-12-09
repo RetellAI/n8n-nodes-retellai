@@ -281,6 +281,19 @@ export async function handleKnowledgeBaseOperations(
 }
 
 
+export async function handleConcurrencyOperations(
+	this: IExecuteFunctions,
+	operation: string,
+	i: number,
+) {
+	if (operation === 'get') {
+		return await retellApiRequest.call(this, 'GET', `/get-concurrency`);
+	}
+
+	throw new NodeOperationError( this.getNode(),`The operation "${operation}" is not supported!`);
+}
+
+
 export async function handleAgentOperations(
 	this: IExecuteFunctions,
 	operation: string,
