@@ -81,5 +81,9 @@ Refer to [n8n's documentation on creating nodes](https://docs.n8n.io/integration
 ## TODO
 - When creating agent, add more properties
 - When updating agent, add more properties
+- When getting a single agent, returns unprocessed content error when given an invalid (deleted) agent ID
+- Create web call may not make sense in this context...
+- LLM: Test all the aspects
+- Phone Number: Looks good. Test it.
 
 

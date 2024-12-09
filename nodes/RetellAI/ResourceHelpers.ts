@@ -155,20 +155,13 @@ export async function handlePhoneNumberOperations(this: IExecuteFunctions,operat
 
 	if (operation === 'update') {
 		const updateFields = this.getNodeParameter('updateFields', itemIndex, {});
-
-		// Validate any phone numbers in update fields
-		if (updateFields.inboundNumber) {
-			validatePhoneNumber.call(this, updateFields.inboundNumber as string, 'inboundNumber', itemIndex);
-		}
-		if (updateFields.outboundNumber) {
-			validatePhoneNumber.call(this, updateFields.outboundNumber as string, 'outboundNumber', itemIndex);
-		}
+		const snakeCaseUpdateFields = convertKeysToSnakeCase.call(this, updateFields);
 
 		return await retellApiRequest.call(
 			this,
 			'PATCH',
 			`/update-phone-number/${phoneNumber}`,
-			updateFields,
+			snakeCaseUpdateFields,
 		);
 	}
 
@@ -294,7 +287,20 @@ export async function handleAgentOperations(
 			'/create-agent',
 			body,
 		);
-	} else if (operation === 'update') {
+	} else if (operation === 'getAll') {
+		return await retellApiRequest.call(this, 'GET', '/list-agents');
+	} else if (operation === 'get') {
+		const agentId = this.getNodeParameter('agentId', i) as string;
+		responseData = await retellApiRequest.call(
+			this,
+			'GET',
+			`/get-agent/${agentId}`,
+		);
+	}  else  if (operation === 'delete') {
+		const agentId = this.getNodeParameter('agentId', i) as string;
+        return await retellApiRequest.call(this, 'DELETE', `/delete-agent/${agentId}`);
+    }
+	else if (operation === 'update') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
 		const updateFields = this.getNodeParameter('updateFields', i, {}) as IDataObject;
 		// Convert keys to snake_case
