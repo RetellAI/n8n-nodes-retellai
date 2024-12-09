@@ -24,17 +24,6 @@ export const callOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Create Web Call',
-				value: 'createWebCall',
-				action: 'Create a web call',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/v2/create-web-call',
-					},
-				},
-			},
-			{
 				name: 'Get',
 				value: 'get',
 				action: 'Get a call',
