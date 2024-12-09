@@ -135,58 +135,30 @@ export const agentFields: INodeProperties[] = [
 		description: 'Unique voice ID used for the agent. Find list of available voices and their preview in Dashboard.',
 	},
 	{
-		displayName: 'Additional Fields',
-		name: 'additionalFields',
-		type: 'collection',
-		placeholder: 'Add Field',
-		default: {},
+		displayName: 'Agent Name',
+		name: 'agentName',
+		type: 'string',
+		default: '',
 		displayOptions: {
 			show: {
 				resource: ['agent'],
 				operation: ['create'],
 			},
 		},
-		options: [
-			{
-				displayName: 'Agent Name',
-				name: 'agentName',
-				type: 'string',
-				default: '',
-				description: 'Name of the agent',
+		description: 'Name of the agent',
+	},
+	{
+		displayName: 'Additional Configuration',
+		name: 'additionalConfig',
+		type: 'json',
+		default: '{\n  "voice_speed": 1\n}',
+		displayOptions: {
+			show: {
+				resource: ['agent'],
+				operation: ['create'],
 			},
-			{
-				displayName: 'Voice Model',
-				name: 'voiceModel',
-				type: 'options',
-				options: [
-					{
-						name: 'Eleven Turbo V2',
-						value: 'eleven_turbo_v2',
-					},
-					{
-						name: 'Eleven Turbo V2.5',
-						value: 'eleven_turbo_v2_5',
-					},
-					{
-						name: 'Eleven Multilingual V2',
-						value: 'eleven_multilingual_v2',
-					},
-				],
-				default: 'eleven_turbo_v2',
-				description: 'Voice model to use',
-			},
-			{
-				displayName: 'Voice Speed',
-				name: 'voiceSpeed',
-				type: 'number',
-				default: 1,
-				typeOptions: {
-					minValue: 0.5,
-					maxValue: 2,
-				},
-				description: 'Speed of voice (0.5-2)',
-			},
-		],
+		},
+		description: 'Additional agent configuration in JSON format using snake_case keys. See <a href="https://docs.retellai.com/api-references/create-agent">API documentation</a> for all available fields.',
 	},
 	// Get operation fields
 	{

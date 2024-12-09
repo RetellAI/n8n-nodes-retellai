@@ -310,7 +310,7 @@ export async function handleAgentOperations(
 		}
 
 		const voiceId = this.getNodeParameter('voiceId', i) as string;
-		const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
+		const agentName = this.getNodeParameter('agentName', i) as string;
 
 		const body: IDataObject = {
 			response_engine: {
@@ -320,12 +320,18 @@ export async function handleAgentOperations(
 			voice_id: voiceId,
 		};
 
-		if (additionalFields.agentName) {
-			body.agent_name = additionalFields.agentName;
+		if (agentName) {
+			body.agent_name = agentName;
 		}
-
-		if (additionalFields.voiceSpeed) {
-			body.voice_speed = additionalFields.voiceSpeed;
+		
+		try {
+			const additionalConfig = this.getNodeParameter('additionalConfig', i, '') as string;
+			if (additionalConfig) {
+				const parsedConfig = JSON.parse(additionalConfig);
+				Object.assign(body, parsedConfig);
+			}
+		} catch (error) {
+			throw new NodeOperationError(this.getNode(), 'Invalid JSON in Additional Configuration');
 		}
 
 		responseData = await retellApiRequest.call(
