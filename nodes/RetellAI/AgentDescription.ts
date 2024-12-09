@@ -52,7 +52,7 @@ export const agentOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/list-agents',
+						url: '=/list-agents',
 					},
 				},
 			},

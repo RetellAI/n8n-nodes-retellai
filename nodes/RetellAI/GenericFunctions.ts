@@ -81,3 +81,19 @@ export function validatePhoneNumber(
 		);
 	}
 }
+
+export function convertKeysToSnakeCase(obj: any): any {
+	if (Array.isArray(obj)) {
+		// If the value is an array, recursively process each item
+		return obj.map((item) => convertKeysToSnakeCase(item));
+	} else if (obj !== null && typeof obj === 'object') {
+		// If the value is an object, process each key
+		return Object.keys(obj).reduce((acc: any, key) => {
+			const snakeKey = key.replace(/([A-Z])/g, '_$1').toLowerCase(); // Convert to snake_case
+			acc[snakeKey] = convertKeysToSnakeCase(obj[key]); // Recurse for nested objects/arrays
+			return acc;
+		}, {});
+	}
+	// Return the value if it's neither an object nor an array
+	return obj;
+}

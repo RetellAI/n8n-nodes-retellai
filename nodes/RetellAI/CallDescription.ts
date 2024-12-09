@@ -65,7 +65,7 @@ export const callFields: INodeProperties[] = [
 	// Fields for createWebCall operation
 	{
 		displayName: 'Agent ID',
-		name: 'agentID',
+		name: 'agentId',
 		type: 'string',
 		required: true,
 		displayOptions: {

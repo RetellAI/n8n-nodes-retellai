@@ -78,4 +78,8 @@ Refer to [n8n's documentation on creating nodes](https://docs.n8n.io/integration
 
 [MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
 
+## TODO
+- When creating agent, add more properties
+- When updating agent, add more properties
+
 

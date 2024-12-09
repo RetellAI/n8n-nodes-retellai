@@ -5,7 +5,7 @@ import type {
 	JsonObject,
 } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
-import { retellApiRequest, validatePhoneNumber } from './GenericFunctions';
+import { convertKeysToSnakeCase, retellApiRequest, validatePhoneNumber } from './GenericFunctions';
 
 export async function handleCallOperations(
 	this: IExecuteFunctions,
@@ -262,20 +262,27 @@ export async function handleAgentOperations(
 	let responseData: IDataObject = {};
 
 	if (operation === 'create') {
-		const responseEngine = this.getNodeParameter('responseEngine.properties', i) as {
-			llmId: string;
-			type: string;
-		};
+		const responseEngine = this.getNodeParameter('responseEngine', i, {}) as IDataObject;
+		const responseEngineProperties = responseEngine['properties'] as { llmId?: string; type?: string } | undefined;
+
+		if (!responseEngineProperties || !responseEngineProperties.llmId || !responseEngineProperties.type) {
+			throw new NodeOperationError( this.getNode(), 'Response Engine properties (llmId and type) are required but not set.');
+		}
+
 		const voiceId = this.getNodeParameter('voiceId', i) as string;
 		const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 
 		const body: IDataObject = {
 			response_engine: {
-				llm_id: responseEngine.llmId,
-				type: responseEngine.type,
+				llm_id: responseEngineProperties.llmId,
+				type: responseEngineProperties.type,
 			},
 			voice_id: voiceId,
 		};
+
+		if (additionalFields.agentName) {
+			body.agent_name = additionalFields.agentName;
+		}
 
 		if (additionalFields.voiceSpeed) {
 			body.voice_speed = additionalFields.voiceSpeed;
@@ -290,12 +297,14 @@ export async function handleAgentOperations(
 	} else if (operation === 'update') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
 		const updateFields = this.getNodeParameter('updateFields', i, {}) as IDataObject;
+		// Convert keys to snake_case
+		const snakeCaseUpdateFields = convertKeysToSnakeCase.call(this, updateFields);
 
 		responseData = await retellApiRequest.call(
 			this,
 			'PATCH',
 			`/update-agent/${agentId}`,
-			updateFields,
+			snakeCaseUpdateFields,
 		);
 	}
 
