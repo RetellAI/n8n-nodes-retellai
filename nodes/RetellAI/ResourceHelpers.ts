@@ -201,27 +201,47 @@ export async function handleKnowledgeBaseOperations(
 	let responseData: IDataObject = {};
 
 	if (operation === 'create') {
-		// Using FormData for file uploads
+		// Initialize FormData
 		const formData = new FormData();
-		
+
+		// 1. Required: Add knowledge_base_name
 		const name = this.getNodeParameter('knowledgeBaseName', i) as string;
 		formData.append('knowledge_base_name', name);
 
-		// Handle binary files
-		const binaryPropertyName = this.getNodeParameter('binaryPropertyName', i) as string;
-		const binaryData = this.helpers.assertBinaryData(i, binaryPropertyName);
-        const dataBuffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
-        const uint8Array = new Uint8Array(dataBuffer as unknown as ArrayBuffer);
-        const arrayBuffer = uint8Array.buffer;
-        
-        formData.append( 'knowledge_base_files', new Blob([arrayBuffer]), binaryData.fileName);
-        
+		// 2. Optional: Add knowledge_base_files
+		const binaryPropertyName = this.getNodeParameter('binaryPropertyName', i, '') as string;
+
+		if (binaryPropertyName) {
+			// Only process file upload if binaryPropertyName is provided
+			const binaryData = this.helpers.assertBinaryData(i, binaryPropertyName);
+			const dataBuffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
+			formData.append('knowledge_base_files', new Blob([dataBuffer]), binaryData.fileName || 'file');
+		}
+		// 3. Additional Fields
 		const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
-		
-		if (additionalFields.knowledgeBaseUrls) {
-			formData.append('knowledge_base_urls', JSON.stringify(additionalFields.knowledgeBaseUrls));
+
+		// Handle fixedCollection: knowledge_base_texts
+		if (additionalFields.knowledgeBaseTexts) {
+			const knowledgeBaseTexts = (additionalFields.knowledgeBaseTexts as { textValue?: IDataObject[] })?.textValue || [];
+			const formattedTexts = knowledgeBaseTexts.map((item: IDataObject) => ({
+				title: item.title,
+				text: item.text,
+			}));
+			formData.append('knowledge_base_texts', JSON.stringify(formattedTexts));
 		}
 
+		// Handle knowledge_base_urls (string array)
+		if (additionalFields.knowledgeBaseUrls) {
+			const urls = additionalFields.knowledgeBaseUrls as string[];
+			formData.append('knowledge_base_urls', JSON.stringify(urls));
+		}
+
+		// Handle enable_auto_refresh
+		if (additionalFields.enableAutoRefresh !== undefined) {
+			formData.append('enable_auto_refresh', JSON.stringify(additionalFields.enableAutoRefresh));
+		}
+
+		// 4. API Request
 		responseData = await retellApiRequest.call(
 			this,
 			'POST',
@@ -231,12 +251,14 @@ export async function handleKnowledgeBaseOperations(
 			undefined,
 			{
 				headers: {
-					'Content-Type': 'multipart/form-data',
+					// Let Axios automatically handle the Content-Type for FormData
+					'Content-Type': undefined,
 				},
 			},
 		);
+	}
 
-	} 
+	// Handle other operations (get, getAll, delete)
 	if (operation === 'get') {
 		const knowledgeBaseId = this.getNodeParameter('knowledgeBaseId', i) as string;
 		responseData = await retellApiRequest.call(
@@ -245,17 +267,19 @@ export async function handleKnowledgeBaseOperations(
 			`/get-knowledge-base/${knowledgeBaseId}`,
 		);
 	}
+
 	if (operation === 'getAll') {
 		return await retellApiRequest.call(this, 'GET', '/list-knowledge-bases');
-	}  
-	
+	}
+
 	if (operation === 'delete') {
 		const knowledgeBaseId = this.getNodeParameter('knowledgeBaseId', i) as string;
-        return await retellApiRequest.call(this, 'DELETE', `/delete-knowledge-base/${knowledgeBaseId}`);
-    }
-	
+		return await retellApiRequest.call(this, 'DELETE', `/delete-knowledge-base/${knowledgeBaseId}`);
+	}
+
 	return responseData;
 }
+
 
 export async function handleAgentOperations(
 	this: IExecuteFunctions,
