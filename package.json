@@ -1,23 +1,23 @@
 {
-	"name": "n8n-nodes-retellai",
+	"name": "@retellai/n8n-nodes-retellai",
 	"version": "0.1.0",
 	"description": "n8n node for RetellAI API integration",
 	"keywords": [
 		"n8n-community-node-package",
 		"n8n-node-retellai",
 		"retellai",
-		"ai",
-		"voice",
-		"llm"
+		"conversational ai",
+		"voice ai"
 	],
 	"license": "MIT",
 	"homepage": "https://retellai.com",
 	"author": {
-		"name": "RetellAI"
+		"name": "RetellAI",
+         "email": "support@retell.ai"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/retellai/n8n-nodes-retellai.git"
+		"url": "https://github.com/RetellAI/n8n-nodes-retellai.git"
 	},
 	"main": "index.js",
 	"scripts": {

@@ -1,90 +1,60 @@
 # n8n-nodes-retellai
 
-This repo contains custom nodes for integrating Retell AI with [n8n](n8n.io). It includes the node linter and other dependencies.
+This is the official n8n node for RetellAI. It provides nodes to interact with the RetellAI API for creating and managing voice AI agents.
 
-## Prerequisites
+[RetellAI](https://retell.ai) provides APIs for creating conversational AI agents with natural-sounding voices.
 
-You need the following installed on your development machine:
+## Installation
 
-* [git](https://git-scm.com/downloads)
-* Node.js (Minimum version Node 20). You can find instructions on how to install using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n globally with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: Watch this [helpful video tutorial](https://www.youtube.com/watch?v=nX_8OVhUVSY) on creating custom n8n nodes
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-## Setup Instructions
+## Operations
 
-1. Clone the repository:
-   ```
-   git clone git@gitlab.com:kanzucodeinc/client-projects/retellai-n8n-custom-node.git
-   ```
-2. Run `npm install` to install dependencies
-3. Open the project in your editor
-4. Browse the nodes in `/nodes` and `/credentials`
-5. Update the `package.json` to match your details
-6. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible
+### Agent
+* Create Agent
+* Update Agent
+* Delete Agent
+* Get Agent
+* Get Many Agents
 
-## Testing Your Node Locally
+### Call
+* Create Call
+* End Call
+* Get Call
+* Get Many Calls
 
-1. Build and link your node:
-   ```bash
-   npm run build
-   npm link
-   ```
+### Concurrency
+* Get Concurrency
 
-2. Set up your local n8n custom nodes directory:
-   ```bash
-   # Create custom directory if it doesn't exist
-   mkdir -p ~/.n8n/custom
-   cd ~/.n8n/custom
-   npm init -y
-   ```
+### Knowledge Base
+* Create Knowledge Base
+* Get Knowledge Base
+* Get Many Knowledge Bases
+* Delete Knowledge Bases
 
-3. Link your node to n8n:
-   ```bash
-   # In ~/.n8n/custom
-   npm link n8n-nodes-retellai
-   ```
+### LLM
+* Create LLM
+* Update LLM
+* Delete LLM
+* Get LLM
+* Get Many LLMs
 
-4. Start n8n:
-   ```bash
-   n8n start
-   ```
+### Phone Number
+* Create Phone Number
+* Update Phone Number
+* Delete Phone Number
+* Get Phone Number
+* Get Many Phone Numbers
 
-## Setting Up Credentials
+### Voice
+* Get Voice
+* Get Many Voices
 
-1. Open your n8n instance (usually at http://localhost:5678)
-2. Go to Settings → Credentials
-3. Click on "Add Credential"
-4. Select the Retell API credential type
-5. Fill in your API credentials
-6. Save and use in your workflows
+## Resources
 
-## Troubleshooting
+* [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
+* [RetellAI API Documentation](https://docs.retellai.com)
 
-If you encounter issues:
-- Ensure the custom directory exists in `~/.n8n/`
-- Check that you ran `npm link` in the correct directories
-- Verify n8n is using the custom directory path
-- Restart n8n after making changes
+## Support
 
-## More Information
-
-Refer to [n8n's documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building custom nodes.
-
-## License
-
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
-
-## TODO
-- When creating agent, add more properties
-- When updating agent, add more properties
-- When getting a single agent, returns unprocessed content error when given an invalid (deleted) agent ID
-- Create web call may not make sense in this context...
-- LLM: Test all the aspects
-- Phone Number: Looks good. Test it.
-- Knowledge Base: Test all. GetAll and delete are working. Test create all 3 types [text, file and url] using the previous nodes input
-
-
+For support with this integration, please contact RetellAI support at support@retell.ai or visit our [documentation](https://docs.retellai.com).
