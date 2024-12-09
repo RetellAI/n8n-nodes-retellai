@@ -235,7 +235,9 @@ export async function handleKnowledgeBaseOperations(
 				},
 			},
 		);
-	} else if (operation === 'get') {
+
+	} 
+	if (operation === 'get') {
 		const knowledgeBaseId = this.getNodeParameter('knowledgeBaseId', i) as string;
 		responseData = await retellApiRequest.call(
 			this,
@@ -243,7 +245,15 @@ export async function handleKnowledgeBaseOperations(
 			`/get-knowledge-base/${knowledgeBaseId}`,
 		);
 	}
-
+	if (operation === 'getAll') {
+		return await retellApiRequest.call(this, 'GET', '/list-knowledge-bases');
+	}  
+	
+	if (operation === 'delete') {
+		const knowledgeBaseId = this.getNodeParameter('knowledgeBaseId', i) as string;
+        return await retellApiRequest.call(this, 'DELETE', `/delete-knowledge-base/${knowledgeBaseId}`);
+    }
+	
 	return responseData;
 }
 

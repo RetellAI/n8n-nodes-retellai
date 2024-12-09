@@ -85,5 +85,6 @@ Refer to [n8n's documentation on creating nodes](https://docs.n8n.io/integration
 - Create web call may not make sense in this context...
 - LLM: Test all the aspects
 - Phone Number: Looks good. Test it.
+- Knowledge Base: Test all. GetAll and delete are working
 
 
