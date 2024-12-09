@@ -11,13 +11,10 @@
 	],
 	"license": "MIT",
 	"homepage": "https://retellai.com",
-	"author": {
-		"name": "RetellAI",
-         "email": "support@retell.ai"
-	},
+	"author": "RetellAI <support@retell.ai>",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/RetellAI/n8n-nodes-retellai.git"
+		"url": "git+https://github.com/RetellAI/n8n-nodes-retellai.git"
 	},
 	"main": "index.js",
 	"scripts": {
@@ -52,5 +49,8 @@
 	},
 	"dependencies": {
 		"ws": "^8.16.0"
+	},
+	"bugs": {
+		"url": "https://github.com/RetellAI/n8n-nodes-retellai/issues"
 	}
 }
