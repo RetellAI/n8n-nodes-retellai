@@ -73,7 +73,7 @@ export const agentOperations: INodeProperties[] = [
 ];
 
 export const agentFields: INodeProperties[] = [
-	// Create operation fields
+	// Create operation fields as well as update
 	{
 		displayName: 'Response Engine',
 		name: 'responseEngine',
@@ -127,7 +127,7 @@ export const agentFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['agent'],
-				operation: ['create'],
+				operation: ['create','update'],
 			},
 		},
 		default: '',
@@ -142,7 +142,7 @@ export const agentFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['agent'],
-				operation: ['create'],
+				operation: ['create','update'],
 			},
 		},
 		description: 'Name of the agent',
@@ -155,7 +155,7 @@ export const agentFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['agent'],
-				operation: ['create'],
+				operation: ['create','update'],
 			},
 		},
 		description: 'Additional agent configuration in JSON format using snake_case keys. See <a href="https://docs.retellai.com/api-references/create-agent">API documentation</a> for all available fields.',
@@ -174,49 +174,5 @@ export const agentFields: INodeProperties[] = [
 		},
 		default: '',
 		description: 'The ID of the agent',
-	},
-	// Update operation fields
-	{
-		displayName: 'Update Fields',
-		name: 'updateFields',
-		type: 'collection',
-		placeholder: 'Add Field',
-		default: {},
-		displayOptions: {
-			show: {
-				resource: ['agent'],
-				operation: ['update'],
-			},
-		},
-		options: [
-			{
-				displayName: 'Agent Name',
-				name: 'agentName',
-				type: 'string',
-				default: '',
-			},
-			{
-				// eslint-disable-next-line n8n-nodes-base/node-param-display-name-wrong-for-dynamic-options
-				displayName: 'Voice ID',
-				name: 'voiceId',
-				type: 'options',
-				// eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-dynamic-options
-				description: 'Unique voice ID used for the agent. Find list of available voices and their preview in Dashboard.',
-				typeOptions: {
-					loadOptionsMethod: 'getVoices',
-				},
-				default: '',
-			},
-			{
-				displayName: 'Voice Speed',
-				name: 'voiceSpeed',
-				type: 'number',
-				default: 1,
-				typeOptions: {
-					minValue: 0.5,
-					maxValue: 2,
-				},
-			},
-		],
 	},
 ];

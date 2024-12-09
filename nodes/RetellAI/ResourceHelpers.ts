@@ -323,7 +323,7 @@ export async function handleAgentOperations(
 		if (agentName) {
 			body.agent_name = agentName;
 		}
-		
+
 		try {
 			const additionalConfig = this.getNodeParameter('additionalConfig', i, '') as string;
 			if (additionalConfig) {
@@ -355,15 +355,36 @@ export async function handleAgentOperations(
     }
 	else if (operation === 'update') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
-		const updateFields = this.getNodeParameter('updateFields', i, {}) as IDataObject;
-		// Convert keys to snake_case
-		const snakeCaseUpdateFields = convertKeysToSnakeCase.call(this, updateFields);
+		const voiceId = this.getNodeParameter('voiceId', i) as string;
+		const agentName = this.getNodeParameter('agentName', i) as string;
+		const body: IDataObject = {};
+
+		if (voiceId) {
+			body.voice_id = voiceId;
+		}
+		if (agentName) {
+			body.agent_name = agentName;
+		}
+		
+		try {
+			const additionalConfig = this.getNodeParameter('additionalConfig', i, '') as string;
+			if (additionalConfig) {
+				const parsedConfig = JSON.parse(additionalConfig);
+				Object.assign(body, parsedConfig);
+			}
+		} catch (error) {
+			throw new NodeOperationError(this.getNode(), 'Invalid JSON in Additional Configuration');
+		}
+
+		if(!body){
+			throw new NodeOperationError(this.getNode(), 'No update fields defined. Please define fields to update');
+		}
 
 		responseData = await retellApiRequest.call(
 			this,
 			'PATCH',
 			`/update-agent/${agentId}`,
-			snakeCaseUpdateFields,
+			body,
 		);
 	}
 
