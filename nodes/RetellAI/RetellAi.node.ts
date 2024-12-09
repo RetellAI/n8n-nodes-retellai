@@ -47,7 +47,7 @@ import {
 	voiceFields,
 } from './VoiceDescription';
 
-export class RetellAI implements INodeType {
+export class RetellAi implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'RetellAI',
 		name: 'retellAi',
