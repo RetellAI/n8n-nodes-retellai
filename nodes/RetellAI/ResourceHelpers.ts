@@ -246,15 +246,7 @@ export async function handleKnowledgeBaseOperations(
 			this,
 			'POST',
 			'/create-knowledge-base',
-			formData,
-			{},
-			undefined,
-			{
-				headers: {
-					// Let Axios automatically handle the Content-Type for FormData
-					'Content-Type': undefined,
-				},
-			},
+			formData
 		);
 	}
 

@@ -1,6 +1,6 @@
 {
 	"name": "@retellai/n8n-nodes-retellai",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Official n8n node for RetellAI API integration",
 	"keywords": [
 		"n8n-community-node-package",
