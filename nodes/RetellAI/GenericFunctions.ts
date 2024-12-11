@@ -47,7 +47,21 @@ export async function retellApiRequest(
 	try {
 		return await this.helpers.request(requestOptions);
 	} catch (error) {
-		throw new NodeApiError(this.getNode(), error);
+		if (error.response) {
+			const { status } = error.response;
+			const errorMessage = error.error.message;
+
+			// Specific handling for 422 Unprocessable Entity
+			if (status === 422 && errorMessage === 'Unprocessable Content') {
+				const baseResource = resource.split('/')[1];
+
+				if (baseResource === 'get-agent') {
+					throw new Error(`Agent not found with the provided ID. Please verify the agent ID.`);
+				}
+			}
+
+			throw new NodeApiError(this.getNode(), error);
+		}
 	}
 }
 
