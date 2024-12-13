@@ -59,9 +59,9 @@ export async function retellApiRequest(
 					throw new Error(`Agent not found with the provided ID. Please verify the agent ID.`);
 				}
 			}
-
-			throw new NodeApiError(this.getNode(), error);
 		}
+		
+		throw new NodeApiError(this.getNode(), error);
 	}
 }
 
