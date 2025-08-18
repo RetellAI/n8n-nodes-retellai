@@ -12,41 +12,20 @@ import {
 	handleKnowledgeBaseOperations,
 	handleAgentOperations,
 	loadVoiceOptions,
-    handleLLMOperations,
-    handlePhoneNumberOperations,
-    handleVoiceOperations,
+	handleLLMOperations,
+	handlePhoneNumberOperations,
+	handleVoiceOperations,
 	handleConcurrencyOperations,
 	loadPhoneNumberOptions,
 } from './ResourceHelpers';
-import {  validateRetellCredentials } from './GenericFunctions';
-import {
-    concurrencyOperations,
-    concurrencyFields,
-} from './ConcurrencyDescription';
-import {
-	callOperations,
-	callFields,
-} from './CallDescription';
-import {
-	agentOperations,
-	agentFields,
-} from './AgentDescription';
-import {
-	llmOperations,
-	llmFields,
-} from './LLMDescription';
-import {
-	phoneNumberOperations,
-	phoneNumberFields,
-} from './PhoneNumberDescription';
-import {
-	knowledgeBaseOperations,
-	knowledgeBaseFields,
-} from './KnowledgeBaseDescription';
-import {
-	voiceOperations,
-	voiceFields,
-} from './VoiceDescription';
+import { validateRetellCredentials } from './GenericFunctions';
+import { concurrencyOperations, concurrencyFields } from './ConcurrencyDescription';
+import { callOperations, callFields } from './CallDescription';
+import { agentOperations, agentFields } from './AgentDescription';
+import { llmOperations, llmFields } from './LLMDescription';
+import { phoneNumberOperations, phoneNumberFields } from './PhoneNumberDescription';
+import { knowledgeBaseOperations, knowledgeBaseFields } from './KnowledgeBaseDescription';
+import { voiceOperations, voiceFields } from './VoiceDescription';
 
 export class RetellAi implements INodeType {
 	description: INodeTypeDescription = {
@@ -191,6 +170,4 @@ export class RetellAi implements INodeType {
 
 		return [returnData];
 	}
-
-
 }

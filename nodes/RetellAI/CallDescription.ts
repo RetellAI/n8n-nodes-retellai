@@ -64,7 +64,8 @@ export const callFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'Unique ID of agent used for the call. Your agent would contain the LLM Websocket URL used for this call.',
+		description:
+			'Unique ID of agent used for the call. Your agent would contain the LLM Websocket URL used for this call.',
 	},
 	// Fields for createPhoneCall operation
 	{
@@ -113,13 +114,13 @@ export const callFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'Override the Agent used to make the call by passing a Retell Agent ID.',
+		description: 'Override the Agent used to make the call by passing a Retell Agent ID',
 	},
 	{
 		displayName: 'Dynamic Variables',
 		name: 'dynamicVariables',
 		type: 'fixedCollection',
-		description: 'Dynamic variables specified and used by the Retell Agent.',
+		description: 'Dynamic variables specified and used by the Retell Agent',
 		displayOptions: {
 			show: {
 				resource: ['call'],

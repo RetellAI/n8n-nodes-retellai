@@ -3,18 +3,17 @@ import type {
 	IHookFunctions,
 	ILoadOptionsFunctions,
 	IHttpRequestOptions,
-    IHttpRequestMethods,
-    IDataObject,
+	IHttpRequestMethods,
+	IDataObject,
 	IPollFunctions,
 } from 'n8n-workflow';
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
-
 
 export async function retellApiRequest(
 	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions | IPollFunctions,
 	method: IHttpRequestMethods,
 	resource: string,
-	body: IDataObject | FormData = {}, 
+	body: IDataObject | FormData = {},
 	qs: IDataObject = {},
 	uri?: string,
 	options: Partial<IHttpRequestOptions> = {},
@@ -23,7 +22,7 @@ export async function retellApiRequest(
 
 	const baseOptions: IHttpRequestOptions = {
 		headers: {
-			'Authorization': `Bearer ${credentials.apiKey}`,
+			Authorization: `Bearer ${credentials.apiKey}`,
 			// Set content type dynamically for FormData
 			'Content-Type': body instanceof FormData ? undefined : 'application/json',
 		},
@@ -35,9 +34,9 @@ export async function retellApiRequest(
 
 	// Add body or FormData
 	if (body instanceof FormData) {
-		baseOptions.body = body; 
+		baseOptions.body = body;
 	} else {
-		baseOptions.body = body; 
+		baseOptions.body = body;
 	}
 
 	const requestOptions: IHttpRequestOptions = {
@@ -61,11 +60,10 @@ export async function retellApiRequest(
 				}
 			}
 		}
-		
+
 		throw new NodeApiError(this.getNode(), error);
 	}
 }
-
 
 export async function validateRetellCredentials(
 	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions,

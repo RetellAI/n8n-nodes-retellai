@@ -48,19 +48,10 @@ export async function handleCallOperations(
 			agent_id: agentId,
 		};
 
-		responseData = await retellApiRequest.call(
-			this,
-			'POST',
-			'/v2/create-web-call',
-			body,
-		);
+		responseData = await retellApiRequest.call(this, 'POST', '/v2/create-web-call', body);
 	} else if (operation === 'get') {
 		const callId = this.getNodeParameter('callId', i) as string;
-		responseData = await retellApiRequest.call(
-			this,
-			'GET',
-			`/v2/get-call/${callId}`,
-		);
+		responseData = await retellApiRequest.call(this, 'GET', `/v2/get-call/${callId}`);
 	} else if (operation === 'getAll') {
 		const returnAll = this.getNodeParameter('returnAll', i) as boolean;
 		const filters = this.getNodeParameter('filters', i, {}) as IDataObject;
@@ -71,56 +62,59 @@ export async function handleCallOperations(
 			body.limit = limit;
 		}
 
-		responseData = await retellApiRequest.call(
-			this,
-			'POST',
-			'/v2/list-calls',
-			body,
-		);
+		responseData = await retellApiRequest.call(this, 'POST', '/v2/list-calls', body);
 	}
 
 	return responseData;
 }
 
-export async function  handleLLMOperations(this: IExecuteFunctions, operation: string, itemIndex: number) {
-    const llmId = this.getNodeParameter('llmId', itemIndex, '') as string;
+export async function handleLLMOperations(
+	this: IExecuteFunctions,
+	operation: string,
+	itemIndex: number,
+) {
+	const llmId = this.getNodeParameter('llmId', itemIndex, '') as string;
 
-    if (operation === 'create') {
-        const model = this.getNodeParameter('model', itemIndex) as string;
-        const additionalFields = this.getNodeParameter('additionalFields', itemIndex, {});
+	if (operation === 'create') {
+		const model = this.getNodeParameter('model', itemIndex) as string;
+		const additionalFields = this.getNodeParameter('additionalFields', itemIndex, {});
 
-        const body = {
-            model,
-            ...additionalFields,
-        };
+		const body = {
+			model,
+			...additionalFields,
+		};
 
-        return await retellApiRequest.call(this, 'POST', '/create-retell-llm', body);
-    }
+		return await retellApiRequest.call(this, 'POST', '/create-retell-llm', body);
+	}
 
-    if (operation === 'get') {
-        return await retellApiRequest.call(this, 'GET', `/get-retell-llm/${llmId}`);
-    }
+	if (operation === 'get') {
+		return await retellApiRequest.call(this, 'GET', `/get-retell-llm/${llmId}`);
+	}
 
-    if (operation === 'getAll') {
-        return await retellApiRequest.call(this, 'GET', '/list-retell-llms');
-    }
+	if (operation === 'getAll') {
+		return await retellApiRequest.call(this, 'GET', '/list-retell-llms');
+	}
 
-    if (operation === 'update') {
-        const updateFields = this.getNodeParameter('updateFields', itemIndex, {});
-        return await retellApiRequest.call(this, 'PATCH', `/update-retell-llm/${llmId}`, updateFields);
-    }
+	if (operation === 'update') {
+		const updateFields = this.getNodeParameter('updateFields', itemIndex, {});
+		return await retellApiRequest.call(this, 'PATCH', `/update-retell-llm/${llmId}`, updateFields);
+	}
 
-    if (operation === 'delete') {
-        return await retellApiRequest.call(this, 'DELETE', `/delete-retell-llm/${llmId}`);
-    }
+	if (operation === 'delete') {
+		return await retellApiRequest.call(this, 'DELETE', `/delete-retell-llm/${llmId}`);
+	}
 
-    throw new NodeOperationError(
-        this.getNode(),
-        `The operation "${operation}" is not supported for resource LLM!`,
-    );
+	throw new NodeOperationError(
+		this.getNode(),
+		`The operation "${operation}" is not supported for resource LLM!`,
+	);
 }
 
-export async function handlePhoneNumberOperations(this: IExecuteFunctions,operation: string, itemIndex: number) {
+export async function handlePhoneNumberOperations(
+	this: IExecuteFunctions,
+	operation: string,
+	itemIndex: number,
+) {
 	if (operation === 'create') {
 		const areaCode = this.getNodeParameter('areaCode', itemIndex) as number;
 		const additionalFields = this.getNodeParameter('additionalFields', itemIndex, {});
@@ -143,7 +137,7 @@ export async function handlePhoneNumberOperations(this: IExecuteFunctions,operat
 	}
 
 	const phoneNumber = this.getNodeParameter('phoneNumber', itemIndex, '') as string;
-	
+
 	// Validate phone number for all operations that use it
 	if (['get', 'update', 'delete'].includes(operation)) {
 		validatePhoneNumber.call(this, phoneNumber, 'phoneNumber', itemIndex);
@@ -180,21 +174,25 @@ export async function handlePhoneNumberOperations(this: IExecuteFunctions,operat
 	);
 }
 
-export async function handleVoiceOperations(this: IExecuteFunctions,operation: string, itemIndex: number) {
-    if (operation === 'get') {
-        const voiceId = this.getNodeParameter('voiceId', itemIndex) as string;
-        return await retellApiRequest.call(this, 'GET', `/get-voice/${voiceId}`);
-    }
+export async function handleVoiceOperations(
+	this: IExecuteFunctions,
+	operation: string,
+	itemIndex: number,
+) {
+	if (operation === 'get') {
+		const voiceId = this.getNodeParameter('voiceId', itemIndex) as string;
+		return await retellApiRequest.call(this, 'GET', `/get-voice/${voiceId}`);
+	}
 
-    if (operation === 'getAll') {
-        const options = this.getNodeParameter('options', itemIndex, {});
-        return await retellApiRequest.call(this, 'GET', '/list-voices', {}, options);
-    }
+	if (operation === 'getAll') {
+		const options = this.getNodeParameter('options', itemIndex, {});
+		return await retellApiRequest.call(this, 'GET', '/list-voices', {}, options);
+	}
 
-    throw new NodeOperationError(
-        this.getNode(),
-        `The operation "${operation}" is not supported for resource Voice!`,
-    );
+	throw new NodeOperationError(
+		this.getNode(),
+		`The operation "${operation}" is not supported for resource Voice!`,
+	);
 }
 
 export async function handleKnowledgeBaseOperations(
@@ -219,14 +217,19 @@ export async function handleKnowledgeBaseOperations(
 			// Only process file upload if binaryPropertyName is provided
 			const binaryData = this.helpers.assertBinaryData(i, binaryPropertyName);
 			const dataBuffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
-			formData.append('knowledge_base_files', new Blob([dataBuffer]), binaryData.fileName || 'file');
+			formData.append(
+				'knowledge_base_files',
+				new Blob([dataBuffer]),
+				binaryData.fileName || 'file',
+			);
 		}
 		// 3. Additional Fields
 		const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 
 		// Handle fixedCollection: knowledge_base_texts
 		if (additionalFields.knowledgeBaseTexts) {
-			const knowledgeBaseTexts = (additionalFields.knowledgeBaseTexts as { textValue?: IDataObject[] })?.textValue || [];
+			const knowledgeBaseTexts =
+				(additionalFields.knowledgeBaseTexts as { textValue?: IDataObject[] })?.textValue || [];
 			const formattedTexts = knowledgeBaseTexts.map((item: IDataObject) => ({
 				title: item.title,
 				text: item.text,
@@ -246,12 +249,7 @@ export async function handleKnowledgeBaseOperations(
 		}
 
 		// 4. API Request
-		responseData = await retellApiRequest.call(
-			this,
-			'POST',
-			'/create-knowledge-base',
-			formData
-		);
+		responseData = await retellApiRequest.call(this, 'POST', '/create-knowledge-base', formData);
 	}
 
 	// Handle other operations (get, getAll, delete)
@@ -276,7 +274,6 @@ export async function handleKnowledgeBaseOperations(
 	return responseData;
 }
 
-
 export async function handleConcurrencyOperations(
 	this: IExecuteFunctions,
 	operation: string,
@@ -286,9 +283,8 @@ export async function handleConcurrencyOperations(
 		return await retellApiRequest.call(this, 'GET', `/get-concurrency`);
 	}
 
-	throw new NodeOperationError( this.getNode(),`The operation "${operation}" is not supported!`);
+	throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not supported!`);
 }
-
 
 export async function handleAgentOperations(
 	this: IExecuteFunctions,
@@ -299,10 +295,19 @@ export async function handleAgentOperations(
 
 	if (operation === 'create') {
 		const responseEngine = this.getNodeParameter('responseEngine', i, {}) as IDataObject;
-		const responseEngineProperties = responseEngine['properties'] as { llmId?: string; type?: string } | undefined;
+		const responseEngineProperties = responseEngine['properties'] as
+			| { llmId?: string; type?: string }
+			| undefined;
 
-		if (!responseEngineProperties || !responseEngineProperties.llmId || !responseEngineProperties.type) {
-			throw new NodeOperationError( this.getNode(), 'Response Engine properties (llmId and type) are required but not set.');
+		if (
+			!responseEngineProperties ||
+			!responseEngineProperties.llmId ||
+			!responseEngineProperties.type
+		) {
+			throw new NodeOperationError(
+				this.getNode(),
+				'Response Engine properties (llmId and type) are required but not set.',
+			);
 		}
 
 		const voiceId = this.getNodeParameter('voiceId', i) as string;
@@ -330,26 +335,16 @@ export async function handleAgentOperations(
 			throw new NodeOperationError(this.getNode(), 'Invalid JSON in Additional Configuration');
 		}
 
-		responseData = await retellApiRequest.call(
-			this,
-			'POST',
-			'/create-agent',
-			body,
-		);
+		responseData = await retellApiRequest.call(this, 'POST', '/create-agent', body);
 	} else if (operation === 'getAll') {
 		return await retellApiRequest.call(this, 'GET', '/list-agents');
 	} else if (operation === 'get') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
-		responseData = await retellApiRequest.call(
-			this,
-			'GET',
-			`/get-agent/${agentId}`,
-		);
-	}  else  if (operation === 'delete') {
+		responseData = await retellApiRequest.call(this, 'GET', `/get-agent/${agentId}`);
+	} else if (operation === 'delete') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
-        return await retellApiRequest.call(this, 'DELETE', `/delete-agent/${agentId}`);
-    }
-	else if (operation === 'update') {
+		return await retellApiRequest.call(this, 'DELETE', `/delete-agent/${agentId}`);
+	} else if (operation === 'update') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
 		const voiceId = this.getNodeParameter('voiceId', i) as string;
 		const agentName = this.getNodeParameter('agentName', i) as string;
@@ -361,7 +356,7 @@ export async function handleAgentOperations(
 		if (agentName) {
 			body.agent_name = agentName;
 		}
-		
+
 		try {
 			const additionalConfig = this.getNodeParameter('additionalConfig', i, '') as string;
 			if (additionalConfig) {
@@ -372,16 +367,14 @@ export async function handleAgentOperations(
 			throw new NodeOperationError(this.getNode(), 'Invalid JSON in Additional Configuration');
 		}
 
-		if(!body){
-			throw new NodeOperationError(this.getNode(), 'No update fields defined. Please define fields to update');
+		if (!body) {
+			throw new NodeOperationError(
+				this.getNode(),
+				'No update fields defined. Please define fields to update',
+			);
 		}
 
-		responseData = await retellApiRequest.call(
-			this,
-			'PATCH',
-			`/update-agent/${agentId}`,
-			body,
-		);
+		responseData = await retellApiRequest.call(this, 'PATCH', `/update-agent/${agentId}`, body);
 	}
 
 	return responseData;
@@ -391,7 +384,7 @@ export async function loadVoiceOptions(
 	this: ILoadOptionsFunctions,
 ): Promise<Array<{ name: string; value: string; description?: string }>> {
 	const voices = await retellApiRequest.call(this, 'GET', '/list-voices');
-	
+
 	return voices.map((voice: JsonObject) => ({
 		name: voice.voice_name as string,
 		value: voice.voice_id as string,
@@ -416,7 +409,7 @@ export function formatPhoneNumber(phoneNumber: string): string {
 	const cleaned = phoneNumber.replace(/\D/g, '');
 	// Check if it's a valid number (at least 10 digits)
 	if (cleaned.length < 10) return phoneNumber;
-	
+
 	// Format as +1XXXXXXXXXX for US numbers
 	if (cleaned.length === 10) {
 		return `+1${cleaned}`;
@@ -446,13 +439,13 @@ export function createWebSocketHandler(
 		}
 	};
 
-    ws.onerror = (event) => {
-        if (event instanceof ErrorEvent) {
-          onError(new Error(event.message));
-        } else {
-          onError(new Error('WebSocket error occurred'));
-        }
-      };
+	ws.onerror = (event) => {
+		if (event instanceof ErrorEvent) {
+			onError(new Error(event.message));
+		} else {
+			onError(new Error('WebSocket error occurred'));
+		}
+	};
 
 	return ws;
 }

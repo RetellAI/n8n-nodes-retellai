@@ -127,12 +127,13 @@ export const agentFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['agent'],
-				operation: ['create','update'],
+				operation: ['create', 'update'],
 			},
 		},
 		default: '',
 		// eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-dynamic-options
-		description: 'Unique voice ID used for the agent. Find list of available voices and their preview in Dashboard.',
+		description:
+			'Unique voice ID used for the agent. Find list of available voices and their preview in Dashboard.',
 	},
 	{
 		displayName: 'Agent Name',
@@ -142,7 +143,7 @@ export const agentFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['agent'],
-				operation: ['create','update'],
+				operation: ['create', 'update'],
 			},
 		},
 		description: 'Name of the agent',
@@ -155,10 +156,11 @@ export const agentFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['agent'],
-				operation: ['create','update'],
+				operation: ['create', 'update'],
 			},
 		},
-		description: 'Additional agent configuration in JSON format using snake_case keys. See <a href="https://docs.retellai.com/api-references/create-agent">API documentation</a> for all available fields.',
+		description:
+			'Additional agent configuration in JSON format using snake_case keys. See <a href="https://docs.retellai.com/api-references/create-agent">API documentation</a> for all available fields.',
 	},
 	// Get operation fields
 	{

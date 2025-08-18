@@ -167,7 +167,8 @@ export const phoneNumberFields: INodeProperties[] = [
 				name: 'outboundAgentId',
 				type: 'string',
 				default: '',
-				description: 'New agent ID to handle outbound calls, or null to disable outbound calls without override',
+				description:
+					'New agent ID to handle outbound calls, or null to disable outbound calls without override',
 			},
 			{
 				displayName: 'Nickname',

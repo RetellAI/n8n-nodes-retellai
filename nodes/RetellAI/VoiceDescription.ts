@@ -153,7 +153,8 @@ export const voiceFields: INodeProperties[] = [
 				name: 'includeVoiceModels',
 				type: 'boolean',
 				default: false,
-				description: 'Whether to include available voice models in response (only applicable for certain providers)',
+				description:
+					'Whether to include available voice models in response (only applicable for certain providers)',
 			},
 			{
 				displayName: 'Language',
