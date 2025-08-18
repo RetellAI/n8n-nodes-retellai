@@ -17,27 +17,31 @@ export async function handleCallOperations(
 	if (operation === 'createPhoneCall') {
 		const fromNumber = this.getNodeParameter('fromNumber', i) as string;
 		const toNumber = this.getNodeParameter('toNumber', i) as string;
-		const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
-		
-        // Validate both phone numbers
+		const overrideAgentId = this.getNodeParameter('overrideAgentId', i, undefined) as string;
+		const dynamicVariablesCollection = this.getNodeParameter(
+			'dynamicVariables',
+			i,
+			{},
+		) as IDataObject;
+		const dynamicVariables = Object.fromEntries(
+			((dynamicVariablesCollection.keyvalue || []) as IDataObject[]).map((kv: IDataObject) => [
+				kv.key,
+				kv.value,
+			]),
+		);
+
+		// Validate both phone numbers
 		validatePhoneNumber.call(this, fromNumber, 'fromNumber', i);
 		validatePhoneNumber.call(this, toNumber, 'toNumber', i);
-        
+
 		const body: IDataObject = {
 			from_number: fromNumber,
 			to_number: toNumber,
+			override_agent_id: overrideAgentId,
+			retell_llm_dynamic_variables: dynamicVariables,
 		};
 
-		if (additionalFields.overrideAgentId) {
-			body.override_agent_id = additionalFields.overrideAgentId;
-		}
-
-		responseData = await retellApiRequest.call(
-			this,
-			'POST',
-			'/v2/create-phone-call',
-			body,
-		);
+		responseData = await retellApiRequest.call(this, 'POST', '/v2/create-phone-call', body);
 	} else if (operation === 'createWebCall') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
 		const body: IDataObject = {
@@ -392,6 +396,18 @@ export async function loadVoiceOptions(
 		name: voice.voice_name as string,
 		value: voice.voice_id as string,
 		description: `${voice.gender} voice with ${voice.accent} accent`,
+	}));
+}
+
+export async function loadPhoneNumberOptions(
+	this: ILoadOptionsFunctions,
+): Promise<Array<{ name: string; value: string; description?: string }>> {
+	const numbers = await retellApiRequest.call(this, 'GET', '/list-phone-numbers');
+
+	return numbers.map((number: JsonObject) => ({
+		name: `${number.phone_number_pretty as string}${number.nickname ? ` - ${number.nickname}` : ''
+			}`,
+		value: number.phone_number as string,
 	}));
 }
 

@@ -16,6 +16,7 @@ import {
     handlePhoneNumberOperations,
     handleVoiceOperations,
 	handleConcurrencyOperations,
+	loadPhoneNumberOptions,
 } from './ResourceHelpers';
 import {  validateRetellCredentials } from './GenericFunctions';
 import {
@@ -133,6 +134,10 @@ export class RetellAi implements INodeType {
 			async getVoices(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadVoiceOptions.call(this);
 			},
+
+			async getPhoneNumbers(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				return loadPhoneNumberOptions.call(this);
+			},
 		},
 	};
 
@@ -187,5 +192,5 @@ export class RetellAi implements INodeType {
 		return [returnData];
 	}
 
-	
+
 }
