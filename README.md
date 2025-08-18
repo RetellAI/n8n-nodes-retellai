@@ -22,6 +22,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 * End Call
 * Get Call
 * Get Many Calls
+* Watch Call (Trigger)
 
 ### Concurrency
 * Get Concurrency
