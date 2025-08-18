@@ -5,12 +5,13 @@ import type {
 	IHttpRequestOptions,
     IHttpRequestMethods,
     IDataObject,
+	IPollFunctions,
 } from 'n8n-workflow';
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 
 export async function retellApiRequest(
-	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions,
+	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions | IPollFunctions,
 	method: IHttpRequestMethods,
 	resource: string,
 	body: IDataObject | FormData = {}, 

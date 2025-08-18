@@ -37,7 +37,8 @@
 			"dist/credentials/RetellAIApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/RetellAI/RetellAi.node.js"
+			"dist/nodes/RetellAI/RetellAi.node.js",
+			"dist/nodes/RetellAI/RetellAiTrigger.node.js"
 		]
 	},
 	"devDependencies": {
