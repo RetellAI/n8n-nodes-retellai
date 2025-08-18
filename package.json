@@ -1,6 +1,6 @@
 {
 	"name": "@retellai/n8n-nodes-retellai",
-	"version": "0.1.3",
+	"version": "0.2.0",
 	"description": "Official n8n node for RetellAI API integration",
 	"keywords": [
 		"n8n-community-node-package",
@@ -12,9 +12,9 @@
 	"license": "MIT",
 	"homepage": "https://retellai.com",
 	"author": {
-        "name": "RetellAI",
-        "email": "support@retell.ai"
-    },
+		"name": "RetellAI",
+		"email": "support@retell.ai"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/RetellAI/n8n-nodes-retellai.git"
