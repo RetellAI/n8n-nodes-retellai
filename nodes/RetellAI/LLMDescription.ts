@@ -87,22 +87,25 @@ export const llmFields: INodeProperties[] = [
 			},
 		},
 		options: [
-			{
-				name: 'GPT-4',
-				value: 'gpt-4o',
-			},
-			{
-				name: 'GPT-4 Mini',
-				value: 'gpt-4o-mini',
-			},
-			{
-				name: 'Claude 3.5 Sonnet',
-				value: 'claude-3.5-sonnet',
-			},
-			{
-				name: 'Claude 3 Haiku',
-				value: 'claude-3-haiku',
-			},
+			{ name: 'Claude 3.5 Haiku', value: 'claude-3.5-haiku' },
+			{ name: 'Claude 3.7 Sonnet', value: 'claude-3.7-sonnet' },
+			{ name: 'Claude 4.0 Sonnet', value: 'claude-4.0-sonnet' },
+
+			{ name: 'DeepSeek V3', value: 'deepseek-v3' },
+
+			{ name: 'Gemini 2.0 Flash', value: 'gemini-2.0-flash' },
+			{ name: 'Gemini 2.0 Flash Lite', value: 'gemini-2.0-flash-lite' },
+			{ name: 'Gemini 2.5 Flash', value: 'gemini-2.5-flash' },
+			{ name: 'Gemini 2.5 Flash Lite', value: 'gemini-2.5-flash-lite' },
+
+			{ name: 'GPT-4.1', value: 'gpt-4.1' },
+			{ name: 'GPT-4.1 Mini', value: 'gpt-4.1-mini' },
+			{ name: 'GPT-4.1 Nano', value: 'gpt-4.1-nano' },
+			{ name: 'GPT-4o', value: 'gpt-4o' },
+			{ name: 'GPT-4o Mini', value: 'gpt-4o-mini' },
+			{ name: 'GPT-5', value: 'gpt-5' },
+			{ name: 'GPT-5 Mini', value: 'gpt-5-mini' },
+			{ name: 'GPT-5 Nano', value: 'gpt-5-nano' },
 		],
 		default: 'gpt-4o',
 		description: 'The underlying text LLM to use',
@@ -183,7 +186,7 @@ export const llmFields: INodeProperties[] = [
 				displayName: 'Model',
 				name: 'model',
 				type: 'options',
-                default: 'gpt-4o',
+				default: 'gpt-4o',
 				options: [
 					{
 						name: 'GPT-4',
