@@ -417,35 +417,3 @@ export function formatPhoneNumber(phoneNumber: string): string {
 	// Format as +XXXXXXXXXXX for international numbers
 	return `+${cleaned}`;
 }
-
-export interface IWebSocketMessage {
-	type: string;
-	data: JsonObject;
-}
-
-export function createWebSocketHandler(
-	url: string,
-	onMessage: (message: IWebSocketMessage) => void,
-	onError: (error: Error) => void,
-): WebSocket {
-	const ws = new WebSocket(url);
-
-	ws.onmessage = (event) => {
-		try {
-			const message = JSON.parse(event.data as string) as IWebSocketMessage;
-			onMessage(message);
-		} catch (error) {
-			onError(new Error('Failed to parse WebSocket message'));
-		}
-	};
-
-	ws.onerror = (event) => {
-		if (event instanceof ErrorEvent) {
-			onError(new Error(event.message));
-		} else {
-			onError(new Error('WebSocket error occurred'));
-		}
-	};
-
-	return ws;
-}
