@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2 - 2025-08-19
+
+- Remove unused dependency on [ws](https://www.npmjs.com/package/ws).
+
 ## 0.2.1 - 2025-08-18
 
 - Update node categories to "Communication" and "AI".
