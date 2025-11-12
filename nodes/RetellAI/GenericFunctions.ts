@@ -65,16 +65,6 @@ export async function retellApiRequest(
 	}
 }
 
-export async function validateRetellCredentials(
-	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions,
-): Promise<void> {
-	try {
-		await retellApiRequest.call(this, 'GET', '/get-concurrency');
-	} catch (error) {
-		throw new NodeOperationError(this.getNode(), 'Invalid API key provided');
-	}
-}
-
 export function validateE164Number(phoneNumber: string): boolean {
 	const e164Regex = /^\+[1-9]\d{10,14}$/;
 	return e164Regex.test(phoneNumber);

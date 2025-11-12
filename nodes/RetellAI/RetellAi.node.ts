@@ -18,7 +18,6 @@ import {
 	handleConcurrencyOperations,
 	loadPhoneNumberOptions,
 } from './ResourceHelpers';
-import { validateRetellCredentials } from './GenericFunctions';
 import { concurrencyOperations, concurrencyFields } from './ConcurrencyDescription';
 import { callOperations, callFields } from './CallDescription';
 import { agentOperations, agentFields } from './AgentDescription';
@@ -125,9 +124,6 @@ export class RetellAi implements INodeType {
 		const returnData: INodeExecutionData[] = [];
 		const resource = this.getNodeParameter('resource', 0) as string;
 		const operation = this.getNodeParameter('operation', 0) as string;
-
-		// Validate credentials before processing
-		await validateRetellCredentials.call(this);
 
 		for (let i = 0; i < items.length; i++) {
 			try {
