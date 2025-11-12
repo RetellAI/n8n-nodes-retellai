@@ -117,8 +117,6 @@ export class RetellAiTrigger implements INodeType {
 				}));
 				return [this.helpers.returnJsonArray(mappedData)];
 			} catch (error) {
-				this.logger.error('Error in Retell AI Watch Call polling trigger', { error });
-				this.logger.info(JSON.stringify(error));
 				return null;
 			}
 		}
