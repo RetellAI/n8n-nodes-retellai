@@ -47,10 +47,12 @@
 		"@typescript-eslint/parser": "~5.45",
 		"eslint-plugin-n8n-nodes-base": "^1.16.0",
 		"gulp": "^4.0.2",
-		"n8n-workflow": "^1.5.0",
 		"prettier": "^2.7.1",
 		"typescript": "~4.8.4"
 	},
+  "peerDependencies": {
+		"n8n-workflow": "*"
+  },
 	"bugs": {
 		"url": "https://github.com/RetellAI/n8n-nodes-retellai/issues"
 	}
