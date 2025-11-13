@@ -16,56 +16,26 @@ export const agentOperations: INodeProperties[] = [
 				name: 'Create',
 				value: 'create',
 				action: 'Create an agent',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/create-agent',
-					},
-				},
 			},
 			{
 				name: 'Delete',
 				value: 'delete',
 				action: 'Delete an agent',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/delete-agent/{{$parameter.agentId}}',
-					},
-				},
 			},
 			{
 				name: 'Get',
 				value: 'get',
 				action: 'Get an agent',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/get-agent/{{$parameter.agentId}}',
-					},
-				},
 			},
 			{
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many agents',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/list-agents',
-					},
-				},
 			},
 			{
 				name: 'Update',
 				value: 'update',
 				action: 'Update an agent',
-				routing: {
-					request: {
-						method: 'PATCH',
-						url: '=/update-agent/{{$parameter.agentId}}',
-					},
-				},
 			},
 		],
 		default: 'create',

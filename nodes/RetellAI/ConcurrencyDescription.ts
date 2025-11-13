@@ -17,12 +17,6 @@ export const concurrencyOperations: INodeProperties[] = [
 				value: 'get',
 				action: 'Get concurrency information',
 				description: 'Get current concurrency usage and limits',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '/concurrency',
-					},
-				},
 			},
 		],
 		default: 'get',

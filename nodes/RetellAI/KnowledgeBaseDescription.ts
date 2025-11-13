@@ -16,45 +16,21 @@ export const knowledgeBaseOperations: INodeProperties[] = [
 				name: 'Create',
 				value: 'create',
 				action: 'Create a knowledge base',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/create-knowledge-base',
-					},
-				},
 			},
 			{
 				name: 'Delete',
 				value: 'delete',
 				action: 'Delete a knowledge base',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/delete-knowledge-base/{{$parameter.knowledgeBaseId}}',
-					},
-				},
 			},
 			{
 				name: 'Get',
 				value: 'get',
 				action: 'Get a knowledge base',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/get-knowledge-base/{{$parameter.knowledgeBaseId}}',
-					},
-				},
 			},
 			{
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many knowledge bases',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '/list-knowledge-bases',
-					},
-				},
 			},
 		],
 		default: 'create',

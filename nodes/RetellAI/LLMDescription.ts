@@ -16,57 +16,27 @@ export const llmOperations: INodeProperties[] = [
 				name: 'Create',
 				value: 'create',
 				action: 'Create a retell LLM',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/create-retell-llm',
-					},
-				},
 			},
 			{
 				name: 'Delete',
 				value: 'delete',
 				action: 'Delete a retell LLM',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/delete-retell-llm/{{$parameter.llmId}}',
-					},
-				},
 			},
 			{
 				name: 'Get',
 				value: 'get',
 				action: 'Get a retell LLM',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/get-retell-llm/{{$parameter.llmId}}',
-					},
-				},
 			},
 			{
 				name: 'Get Many',
 				value: 'getAll',
 				// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 				action: 'Get many retell LLMs',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '/list-retell-llms',
-					},
-				},
 			},
 			{
 				name: 'Update',
 				value: 'update',
 				action: 'Update a retell LLM',
-				routing: {
-					request: {
-						method: 'PATCH',
-						url: '=/update-retell-llm/{{$parameter.llmId}}',
-					},
-				},
 			},
 		],
 		default: 'create',

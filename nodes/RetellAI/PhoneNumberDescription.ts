@@ -16,56 +16,26 @@ export const phoneNumberOperations: INodeProperties[] = [
 				name: 'Create',
 				value: 'create',
 				action: 'Create a phone number',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/create-phone-number',
-					},
-				},
 			},
 			{
 				name: 'Delete',
 				value: 'delete',
 				action: 'Delete a phone number',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/delete-phone-number/{{$parameter.phoneNumber}}',
-					},
-				},
 			},
 			{
 				name: 'Get',
 				value: 'get',
 				action: 'Get a phone number',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/get-phone-number/{{$parameter.phoneNumber}}',
-					},
-				},
 			},
 			{
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many phone numbers',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '/list-phone-numbers',
-					},
-				},
 			},
 			{
 				name: 'Update',
 				value: 'update',
 				action: 'Update a phone number',
-				routing: {
-					request: {
-						method: 'PATCH',
-						url: '=/update-phone-number/{{$parameter.phoneNumber}}',
-					},
-				},
 			},
 		],
 		default: 'create',
