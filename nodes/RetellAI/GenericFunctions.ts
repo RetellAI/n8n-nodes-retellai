@@ -18,11 +18,8 @@ export async function retellApiRequest(
 	uri?: string,
 	options: Partial<IHttpRequestOptions> = {},
 ): Promise<any> {
-	const credentials = await this.getCredentials('retellAIApi');
-
 	const baseOptions: IHttpRequestOptions = {
 		headers: {
-			Authorization: `Bearer ${credentials.apiKey}`,
 			// Set content type dynamically for FormData
 			'Content-Type': body instanceof FormData ? undefined : 'application/json',
 		},
@@ -45,7 +42,11 @@ export async function retellApiRequest(
 	};
 
 	try {
-		return await this.helpers.request(requestOptions);
+		return await this.helpers.httpRequestWithAuthentication.call(
+			this,
+			'retellAIApi',
+			requestOptions,
+		);
 	} catch (error) {
 		if (error.response) {
 			const { status } = error.response;
