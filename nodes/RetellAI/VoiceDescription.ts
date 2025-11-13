@@ -16,23 +16,11 @@ export const voiceOperations: INodeProperties[] = [
 				name: 'Get',
 				value: 'get',
 				action: 'Get a voice',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/get-voice/{{$parameter.voiceId}}',
-					},
-				},
 			},
 			{
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many voices',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '/list-voices',
-					},
-				},
 			},
 		],
 		default: 'getAll',
