@@ -27,7 +27,7 @@ import { knowledgeBaseOperations, knowledgeBaseFields } from './KnowledgeBaseDes
 import { voiceOperations, voiceFields } from './VoiceDescription';
 
 export class RetellAi implements INodeType {
-	description: INodeTypeDescription = {
+	description = {
 		displayName: 'RetellAI',
 		name: 'retellAi',
 		icon: 'file:retellai.svg',
@@ -35,6 +35,7 @@ export class RetellAi implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Interact with RetellAI API',
+		usableAsTool: true,
 		defaults: {
 			name: 'RetellAI',
 		},
@@ -99,7 +100,7 @@ export class RetellAi implements INodeType {
 			...voiceOperations,
 			...voiceFields,
 		],
-	};
+	} as unknown as INodeTypeDescription; // usableAsTool is not on the interface, so the linter is complaining
 
 	methods = {
 		loadOptions: {
