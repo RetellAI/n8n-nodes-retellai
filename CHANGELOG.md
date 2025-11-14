@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.3 - 2025-11-13
+
+- Remove logger usage.
+- Update email in package.json.
+- Update node categories to "Communication" and "Miscellaneous".
+- Remove custom credentials validator.
+- Move *n8n-workflow* to *peerDependencies*.
+- Remove all declerative-style code since programmatic style is what executes the nodes.
+- Add *usableAsTool* to action.
+- Use helpers.httpRequestWithAuthentication instead of helpers.request (deprecated).
+
 ## 0.2.2 - 2025-08-19
 
 - Remove unused dependency on [ws](https://www.npmjs.com/package/ws).
