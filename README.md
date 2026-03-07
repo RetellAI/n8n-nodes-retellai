@@ -1,11 +1,11 @@
 # n8n-nodes-retellai
 
 [![n8n](https://img.shields.io/badge/n8n-community%20node-orange.svg)](https://n8n.io/)
-[![RetellAI](https://img.shields.io/badge/Powered%20by-RetellAI-blue.svg)](https://retell.ai)
+[![RetellAI](https://img.shields.io/badge/Powered%20by-RetellAI-blue.svg)](https://www.retellai.com)
 
 This is the official n8n node for RetellAI. It provides nodes to interact with the RetellAI API for creating and managing voice AI agents.
 
-[RetellAI](https://retell.ai) provides APIs for creating conversational AI agents with natural-sounding voices for phone calls, web calls, and more.
+[RetellAI](https://www.retellai.com) provides APIs for creating conversational AI agents with natural-sounding voices for phone calls, web calls, and more.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ This is the official n8n node for RetellAI. It provides nodes to interact with t
 ## Prerequisites
 
 - n8n instance (self-hosted or cloud)
-- RetellAI account with API key ([Get one here](https://retell.ai))
+- RetellAI account with API key ([Get one here](https://www.retellai.com))
 - Basic understanding of n8n workflows
 
 ## Installation
@@ -47,7 +47,7 @@ Then restart your n8n instance.
 
 ### Setting up RetellAI Credentials
 
-1. Get your API key from [RetellAI Dashboard](https://dashboard.retell.ai)
+1. Get your API key from [RetellAI Dashboard](https://dashboard.retellai.com)
    - Sign up/login to your RetellAI account
    - Navigate to **Settings** → **API Keys**
    - Copy your API key
@@ -179,11 +179,11 @@ Create an agent that answers FAQs:
 ### Common Issues
 
 **Error: "Invalid API Key"**
-- Verify your API key is copied correctly from [RetellAI Dashboard](https://dashboard.retell.ai)
+- Verify your API key is copied correctly from [RetellAI Dashboard](https://dashboard.retellai.com)
 - Ensure no extra spaces in the credentials
 
 **Error: "Rate limit exceeded"**
-- Check your [RetellAI plan limits](https://retell.ai/pricing)
+- Check your [RetellAI plan limits](https://www.retellai.com/pricing)
 - Add a **Wait** node between requests if needed
 
 **Error: "Agent not found"**
@@ -208,7 +208,7 @@ n8n start
 
 - [n8n Community Nodes Documentation](https://docs.n8n.io/integrations/community-nodes/)
 - [RetellAI API Documentation](https://docs.retellai.com)
-- [RetellAI Dashboard](https://dashboard.retell.ai)
+- [RetellAI Dashboard](https://dashboard.retellai.com)
 - [n8n Documentation](https://docs.n8n.io)
 
 ## Contributing
@@ -219,7 +219,7 @@ Contributions are welcome! Please see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) f
 
 For support with this integration:
 
-- **RetellAI Issues**: support@retell.ai or [RetellAI Documentation](https://docs.retellai.com)
+- **RetellAI Issues**: support@retellai.com or [RetellAI Documentation](https://docs.retellai.com)
 - **n8n Issues**: [n8n Community Forum](https://community.n8n.io)
 - **Node Issues**: [GitHub Issues](https://github.com/RetellAI/n8n-nodes-retellai/issues)
 
