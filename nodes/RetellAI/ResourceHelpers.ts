@@ -62,7 +62,8 @@ export async function handleCallOperations(
 			body.limit = limit;
 		}
 
-		responseData = await retellApiRequest.call(this, 'POST', '/v2/list-calls', body);
+		const listCallsResponse = await retellApiRequest.call(this, 'POST', '/v3/list-calls', body);
+		responseData = listCallsResponse.items;
 	}
 
 	return responseData;
@@ -92,7 +93,8 @@ export async function handleLLMOperations(
 	}
 
 	if (operation === 'getAll') {
-		return await retellApiRequest.call(this, 'GET', '/list-retell-llms');
+		const listLlmsResponse = await retellApiRequest.call(this, 'GET', '/v2/list-retell-llms');
+		return listLlmsResponse.items;
 	}
 
 	if (operation === 'update') {
@@ -148,7 +150,8 @@ export async function handlePhoneNumberOperations(
 	}
 
 	if (operation === 'getAll') {
-		return await retellApiRequest.call(this, 'GET', '/list-phone-numbers');
+		const listPhoneResponse = await retellApiRequest.call(this, 'GET', '/v2/list-phone-numbers');
+		return listPhoneResponse.items;
 	}
 
 	if (operation === 'update') {
@@ -395,7 +398,8 @@ export async function loadVoiceOptions(
 export async function loadPhoneNumberOptions(
 	this: ILoadOptionsFunctions,
 ): Promise<Array<{ name: string; value: string; description?: string }>> {
-	const numbers = await retellApiRequest.call(this, 'GET', '/list-phone-numbers');
+	const response = await retellApiRequest.call(this, 'GET', '/v2/list-phone-numbers');
+	const numbers = response.items;
 
 	return numbers.map((number: JsonObject) => ({
 		name: `${number.phone_number_pretty as string}${number.nickname ? ` - ${number.nickname}` : ''

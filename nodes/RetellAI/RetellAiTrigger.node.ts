@@ -82,12 +82,14 @@ export class RetellAiTrigger implements INodeType {
 				const callStatus = this.getNodeParameter('callStatus', 0) as string;
 				const limit = this.getNodeParameter('limit', DEFAULT_FETCH_LIMIT) as string;
 
-				const response = await retellApiRequest.call(this, 'POST', '/v2/list-calls', {
+				const listResponse = await retellApiRequest.call(this, 'POST', '/v3/list-calls', {
 					filterCriteria: {
 						call_status: callStatus,
 					},
 					limit,
 				});
+
+				const response = listResponse.items;
 
 				if (!Array.isArray(response) || response.length === 0) {
 					return null;

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.4 - 2026-06-12
+
+- Migrate list endpoints ahead of Retell API deprecation on 2026-06-15:
+  - `POST /v2/list-calls` → `POST /v3/list-calls` (Call: Get Many, Watch Calls trigger)
+  - `GET /list-retell-llms` → `GET /v2/list-retell-llms` (LLM: Get Many)
+  - `GET /list-phone-numbers` → `GET /v2/list-phone-numbers` (Phone Number: Get Many, From Number dropdown)
+- Handle updated response envelope (`items`, `pagination_key`, `has_more`) returned by versioned list endpoints.
+
 ## 0.2.3 - 2025-11-13
 
 - Remove logger usage.
