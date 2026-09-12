@@ -22,9 +22,11 @@ export async function handleCallOperations(
 	if (operation === 'createPhoneCall') {
 		const fromNumber = this.getNodeParameter('fromNumber', i) as string;
 		const toNumber = this.getNodeParameter('toNumber', i) as string;
-		const overrideAgentId = (this.getNodeParameter('overrideAgentId', i, '') as string).trim();
+		const overrideAgentId = (
+			this.getNodeParameter('overrideAgentId', i, '') as string | null | undefined
+		)?.trim();
 		const overrideAgentVersion = String(
-			this.getNodeParameter('overrideAgentVersion', i, ''),
+			this.getNodeParameter('overrideAgentVersion', i, '') ?? '',
 		).trim();
 		const dynamicVariablesCollection = this.getNodeParameter(
 			'dynamicVariables',
@@ -363,7 +365,7 @@ export async function handleAgentOperations(
 		responseData = await retellApiRequest.call(this, 'POST', '/create-agent', body);
 	} else if (operation === 'getAll') {
 		return await retellApiRequestAllItems.call(this, 'POST', '/v2/list-agents', {
-			filter_criteria: { channel: { op: 'eq', value: 'voice' } },
+			filter_criteria: { channel: { type: 'string', op: 'eq', value: 'voice' } },
 		});
 	} else if (operation === 'get') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
