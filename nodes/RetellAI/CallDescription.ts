@@ -41,7 +41,7 @@ export const callOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'POST',
-						url: '/v2/list-calls',
+						url: '/v3/list-calls',
 					},
 				},
 			},
@@ -114,7 +114,26 @@ export const callFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'Override the Agent used to make the call by passing a Retell Agent ID',
+		description:
+			'Override the agent used to make the call. Leave empty to use the agent bound to the phone number.',
+	},
+	{
+		displayName: 'Override Agent Version',
+		name: 'overrideAgentVersion',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['call'],
+				operation: ['createPhoneCall'],
+			},
+			hide: {
+				overrideAgentId: [''],
+			},
+		},
+		default: '',
+		placeholder: 'e.g. 3 or latest_published',
+		description:
+			'Version of the override agent: a number (including 0), latest_published, latest, or a version tag. Leave empty to use the default version.',
 	},
 	{
 		displayName: 'Dynamic Variables',

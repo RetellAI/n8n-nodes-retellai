@@ -5,7 +5,12 @@ import type {
 	JsonObject,
 } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
-import { convertKeysToSnakeCase, retellApiRequest, validatePhoneNumber } from './GenericFunctions';
+import {
+	convertKeysToSnakeCase,
+	retellApiRequest,
+	retellApiRequestAllItems,
+	validatePhoneNumber,
+} from './GenericFunctions';
 
 export async function handleCallOperations(
 	this: IExecuteFunctions,
@@ -17,7 +22,10 @@ export async function handleCallOperations(
 	if (operation === 'createPhoneCall') {
 		const fromNumber = this.getNodeParameter('fromNumber', i) as string;
 		const toNumber = this.getNodeParameter('toNumber', i) as string;
-		const overrideAgentId = this.getNodeParameter('overrideAgentId', i, undefined) as string;
+		const overrideAgentId = (this.getNodeParameter('overrideAgentId', i, '') as string).trim();
+		const overrideAgentVersion = String(
+			this.getNodeParameter('overrideAgentVersion', i, ''),
+		).trim();
 		const dynamicVariablesCollection = this.getNodeParameter(
 			'dynamicVariables',
 			i,
@@ -37,9 +45,16 @@ export async function handleCallOperations(
 		const body: IDataObject = {
 			from_number: fromNumber,
 			to_number: toNumber,
-			override_agent_id: overrideAgentId,
 			retell_llm_dynamic_variables: dynamicVariables,
 		};
+		if (overrideAgentId) {
+			body.override_agent_id = overrideAgentId;
+			if (overrideAgentVersion !== '') {
+				body.override_agent_version = /^\d+$/.test(overrideAgentVersion)
+					? Number(overrideAgentVersion)
+					: overrideAgentVersion;
+			}
+		}
 
 		responseData = await retellApiRequest.call(this, 'POST', '/v2/create-phone-call', body);
 	} else if (operation === 'createWebCall') {
@@ -48,7 +63,7 @@ export async function handleCallOperations(
 			agent_id: agentId,
 		};
 
-		responseData = await retellApiRequest.call(this, 'POST', '/v2/create-web-call', body);
+		responseData = await retellApiRequest.call(this, 'POST', '/v3/create-web-call', body);
 	} else if (operation === 'get') {
 		const callId = this.getNodeParameter('callId', i) as string;
 		responseData = await retellApiRequest.call(this, 'GET', `/v2/get-call/${callId}`);
@@ -93,8 +108,7 @@ export async function handleLLMOperations(
 	}
 
 	if (operation === 'getAll') {
-		const listLlmsResponse = await retellApiRequest.call(this, 'GET', '/v2/list-retell-llms');
-		return listLlmsResponse.items;
+		return await retellApiRequestAllItems.call(this, 'GET', '/v2/list-retell-llms');
 	}
 
 	if (operation === 'update') {
@@ -112,6 +126,18 @@ export async function handleLLMOperations(
 	);
 }
 
+function formatPhoneNumberFields(fields: IDataObject): IDataObject {
+	const body = convertKeysToSnakeCase(fields) as IDataObject;
+	for (const direction of ['inbound', 'outbound']) {
+		const field = `${direction}_agent_id`;
+		if (body[field] !== undefined) {
+			body[`${direction}_agents`] = body[field] ? [{ agent_id: body[field], weight: 1 }] : null;
+			delete body[field];
+		}
+	}
+	return body;
+}
+
 export async function handlePhoneNumberOperations(
 	this: IExecuteFunctions,
 	operation: string,
@@ -123,7 +149,7 @@ export async function handlePhoneNumberOperations(
 
 		const body = {
 			area_code: areaCode,
-			...additionalFields,
+			...formatPhoneNumberFields(additionalFields),
 		};
 
 		// Area code validation
@@ -150,20 +176,16 @@ export async function handlePhoneNumberOperations(
 	}
 
 	if (operation === 'getAll') {
-		const listPhoneResponse = await retellApiRequest.call(this, 'GET', '/v2/list-phone-numbers');
-		return listPhoneResponse.items;
+		const returnAll = this.getNodeParameter('returnAll', itemIndex) as boolean;
+		const limit = returnAll ? undefined : (this.getNodeParameter('limit', itemIndex) as number);
+		return await retellApiRequestAllItems.call(this, 'GET', '/v2/list-phone-numbers', {}, limit);
 	}
 
 	if (operation === 'update') {
 		const updateFields = this.getNodeParameter('updateFields', itemIndex, {});
-		const snakeCaseUpdateFields = convertKeysToSnakeCase.call(this, updateFields);
+		const body = formatPhoneNumberFields(updateFields);
 
-		return await retellApiRequest.call(
-			this,
-			'PATCH',
-			`/update-phone-number/${phoneNumber}`,
-			snakeCaseUpdateFields,
-		);
+		return await retellApiRequest.call(this, 'PATCH', `/update-phone-number/${phoneNumber}`, body);
 	}
 
 	if (operation === 'delete') {
@@ -293,7 +315,7 @@ export async function handleAgentOperations(
 	this: IExecuteFunctions,
 	operation: string,
 	i: number,
-): Promise<IDataObject> {
+): Promise<IDataObject | IDataObject[]> {
 	let responseData: IDataObject = {};
 
 	if (operation === 'create') {
@@ -340,7 +362,9 @@ export async function handleAgentOperations(
 
 		responseData = await retellApiRequest.call(this, 'POST', '/create-agent', body);
 	} else if (operation === 'getAll') {
-		return await retellApiRequest.call(this, 'GET', '/list-agents');
+		return await retellApiRequestAllItems.call(this, 'POST', '/v2/list-agents', {
+			filter_criteria: { channel: { op: 'eq', value: 'voice' } },
+		});
 	} else if (operation === 'get') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
 		responseData = await retellApiRequest.call(this, 'GET', `/get-agent/${agentId}`);
@@ -398,12 +422,12 @@ export async function loadVoiceOptions(
 export async function loadPhoneNumberOptions(
 	this: ILoadOptionsFunctions,
 ): Promise<Array<{ name: string; value: string; description?: string }>> {
-	const response = await retellApiRequest.call(this, 'GET', '/v2/list-phone-numbers');
-	const numbers = response.items;
+	const numbers = await retellApiRequestAllItems.call(this, 'GET', '/v2/list-phone-numbers');
 
-	return numbers.map((number: JsonObject) => ({
-		name: `${number.phone_number_pretty as string}${number.nickname ? ` - ${number.nickname}` : ''
-			}`,
+	return numbers.map((number) => ({
+		name: `${number.phone_number_pretty as string}${
+			number.nickname ? ` - ${number.nickname}` : ''
+		}`,
 		value: number.phone_number as string,
 	}));
 }
