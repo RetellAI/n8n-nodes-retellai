@@ -1,60 +1,13 @@
 # Changelog
 
-## 0.2.5 - Unreleased
+## 0.2.5 - 2026-09-11
 
-This release includes breaking changes to web-call creation and Agent → Get Many. Update affected browser integrations and workflows before upgrading `@retellai/n8n-nodes-retellai`.
-
-### Breaking changes and migration
-
-#### Web-call creation requires browser SDK 3.x
-
-Web-call creation now uses `POST /v3/create-web-call`. Its output contains browser connection details (`call_id`, `access_token`, `transport`, `ice_servers`, and `expires_at`) instead of the previous full web-call object. Browser integrations using `retell-client-js-sdk` 2.x cannot connect using this response.
-
-Upgrade the SDK in the browser application that consumes the n8n output:
-
-```bash
-npm install retell-client-js-sdk@^3
-```
-
-If your application uses `RetellWebClient`, update its `startCall` invocation to pass the additional connection fields:
-
-```js
-import { RetellWebClient } from 'retell-client-js-sdk';
-
-const retellWebClient = new RetellWebClient();
-// createCallResponse is the web-call creation output returned by your n8n workflow.
-await retellWebClient.startCall({
-  accessToken: createCallResponse.access_token,
-  callId: createCallResponse.call_id,
-  transport: createCallResponse.transport,
-  iceServers: createCallResponse.ice_servers,
-});
-```
-
-Forward these fields through any intermediate webhook response or field-mapping node. If downstream nodes need call fields such as `agent_id` or `call_status`, retrieve them with Call → Get using the returned `call_id`.
-
-The v2 API has an announced deprecation date of **2026-09-30**. This package switches to v3 immediately when upgraded to 0.2.5; it does not wait until that date or provide a v2 compatibility option. Coordinate the browser SDK and workflow changes with the package upgrade. See the [browser SDK source](https://github.com/RetellAI/retell-client-js-sdk) for its 3.x interfaces.
-
-#### Agent → Get Many returns summaries
-
-Agent → Get Many now uses `POST /v2/list-agents` and returns one summary per voice agent, rather than full agent configurations. Configuration fields such as `voice_id` are no longer present, so expressions that read them directly from Get Many must be updated.
-
-To retrieve full configurations:
-
-1. Connect Agent → Get Many to another RetellAI node.
-2. Set that node to Agent → Get.
-3. Set Agent ID to the expression `{{ $json.agent_id }}`.
-4. Connect downstream nodes that need fields such as `voice_id` to the Get node's output.
-
-The Get node runs for each incoming agent item and makes one additional API request per agent. If you already know the agent ID, use Agent → Get directly.
-
-### Fixes and improvements
-
-- Add optional Override Agent Version to Create Phone Call. Accept numeric versions (including `0`), `latest`, `latest_published`, and version tags when Override Agent ID is set.
-- Omit blank, missing, or null overrides, including n8n expression results, so calls use the phone number's configured agent when no override is supplied.
-- Follow pagination for agent, phone-number, and LLM lists and the From Number dropdown; honor Phone Number → Get Many's Return All and Limit settings.
-- Convert phone-number agent assignments to the current weighted binding fields on create and update. Empty assignments clear a binding; omitted assignments preserve it.
-- Include the API migrations documented in 0.2.4 below for users upgrading from the published 0.2.3 package.
+- **Breaking:** Web-call creation now uses `/v3/create-web-call` and returns connection details instead of the full call object. Browser integrations require SDK 3.x and must pass `callId`, `transport`, and `iceServers` to `startCall` alongside `accessToken`; SDK 2.x is incompatible.
+- **Breaking:** Agent: Get Many now uses `/v2/list-agents` and returns summaries instead of full agent configurations. Fields such as `voice_id` are no longer returned; use Agent: Get for full configurations.
+- Add Override Agent Version to Create Phone Call.
+- Fix blank or missing agent overrides so calls use the phone number's configured agent.
+- Handle pagination for agent, phone-number, and LLM lists and the From Number dropdown; honor phone-number Return All/Limit settings.
+- Migrate phone-number agent assignments to weighted bindings on create and update.
 
 ## 0.2.4 - 2026-06-12
 
