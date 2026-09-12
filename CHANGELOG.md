@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.5 - 2026-09-11
+
+- **Breaking:** Web-call creation now uses `/v3/create-web-call` and returns connection details instead of the full call object. Browser integrations require SDK 3.x and must pass `callId`, `transport`, and `iceServers` to `startCall` alongside `accessToken`; SDK 2.x is incompatible.
+- **Breaking:** Agent: Get Many now uses `/v2/list-agents` and returns summaries instead of full agent configurations. Fields such as `voice_id` are no longer returned; use Agent: Get for full configurations.
+- Add Override Agent Version to Create Phone Call.
+- Fix blank or missing agent overrides so calls use the phone number's configured agent.
+- Handle pagination for agent, phone-number, and LLM lists and the From Number dropdown; honor phone-number Return All/Limit settings.
+- Migrate phone-number agent assignments to weighted bindings on create and update.
+
 ## 0.2.4 - 2026-06-12
 
 - Migrate list endpoints ahead of Retell API deprecation on 2026-06-15:

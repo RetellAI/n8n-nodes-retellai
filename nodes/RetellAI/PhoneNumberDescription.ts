@@ -130,7 +130,7 @@ export const phoneNumberFields: INodeProperties[] = [
 				name: 'inboundAgentId',
 				type: 'string',
 				default: '',
-				description: 'New agent ID to handle inbound calls, or null to disable inbound calls',
+				description: 'New agent ID to handle inbound calls. Leave empty to disable inbound calls.',
 			},
 			{
 				displayName: 'Outbound Agent',
@@ -138,7 +138,7 @@ export const phoneNumberFields: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description:
-					'New agent ID to handle outbound calls, or null to disable outbound calls without override',
+					'New agent ID to handle outbound calls. Leave empty to disable outbound calls without override.',
 			},
 			{
 				displayName: 'Nickname',

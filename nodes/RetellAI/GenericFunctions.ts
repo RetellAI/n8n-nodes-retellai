@@ -66,6 +66,27 @@ export async function retellApiRequest(
 	}
 }
 
+export async function retellApiRequestAllItems(
+	this: IExecuteFunctions | ILoadOptionsFunctions,
+	method: IHttpRequestMethods,
+	resource: string,
+	body: IDataObject = {},
+	limit?: number,
+): Promise<IDataObject[]> {
+	const items: IDataObject[] = [];
+	const qs: IDataObject = {};
+	let response;
+
+	do {
+		qs.limit = Math.min(limit === undefined ? 1000 : limit - items.length, 1000);
+		response = await retellApiRequest.call(this, method, resource, body, qs);
+		items.push(...response.items);
+		qs.pagination_key = response.pagination_key;
+	} while (response.has_more && (limit === undefined || items.length < limit));
+
+	return limit === undefined ? items : items.slice(0, limit);
+}
+
 export function validateE164Number(phoneNumber: string): boolean {
 	const e164Regex = /^\+[1-9]\d{10,14}$/;
 	return e164Regex.test(phoneNumber);

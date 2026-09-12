@@ -1,6 +1,6 @@
 {
 	"name": "@retellai/n8n-nodes-retellai",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"description": "Official n8n node for RetellAI API integration",
 	"keywords": [
 		"n8n-community-node-package",
@@ -29,7 +29,8 @@
 		"prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"CHANGELOG.md"
 	],
 	"n8n": {
 		"n8nNodesApiVersion": 1,
